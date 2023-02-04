@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Card",
+"language": "GDScript",
+"path": "res://Scripts/Card.gd"
+}, {
 "base": "MarginContainer",
 "class": "CardContainer",
 "language": "GDScript",
@@ -48,8 +53,14 @@ _global_script_classes=[ {
 "class": "Random",
 "language": "GDScript",
 "path": "res://Scripts/Random.gd"
+}, {
+"base": "Card",
+"class": "RootCard",
+"language": "GDScript",
+"path": "res://Scripts/RootCard.gd"
 } ]
 _global_script_class_icons={
+"Card": "",
 "CardContainer": "",
 "CoordGrid": "",
 "CoordSet": "",
@@ -57,7 +68,8 @@ _global_script_class_icons={
 "Hex": "",
 "HexLayout": "",
 "HexSets": "",
-"Random": ""
+"Random": "",
+"RootCard": ""
 }
 
 [application]
