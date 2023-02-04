@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Screens/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Screens/Game/TileSet.tres" type="TileSet" id=2]
 [ext_resource path="res://UI/MainTheme.tres" type="Theme" id=3]
+[ext_resource path="res://UI/Elements/PlantCard/PlantCard.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -71,6 +72,13 @@ size_flags_vertical = 3
 margin_right = 400.0
 margin_bottom = 42.0
 text = "Plant Cards"
+
+[node name="PlantCard" parent="UI/Root/CardsContainer/Cards/PlantCards" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 46.0
+margin_right = 400.0
+margin_bottom = 92.0
 
 [node name="RootCards" type="VBoxContainer" parent="UI/Root/CardsContainer/Cards"]
 margin_top = 354.0
