@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Screens/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Screens/Game/TerrainTileSet.tres" type="TileSet" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Screens/Game/PlantTileSet.tres" type="TileSet" id=8]
 [ext_resource path="res://Screens/Game/WaterTileSet.tres" type="TileSet" id=9]
 [ext_resource path="res://UI/Elements/CancelCard/CancelCard.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Screens/Game/RootTileSet.tres" type="TileSet" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "PlantFlash"
@@ -25,6 +26,22 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.25098 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "RootFlash"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Grids/Roots:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.501961 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="Game" type="Node2D"]
@@ -51,6 +68,12 @@ cell_size = Vector2( 63, 49 )
 cell_half_offset = 0
 format = 1
 
+[node name="Roots" type="TileMap" parent="Grids"]
+tile_set = ExtResource( 11 )
+cell_size = Vector2( 63, 49 )
+cell_half_offset = 0
+format = 1
+
 [node name="Highlight" type="TileMap" parent="Grids"]
 modulate = Color( 0.47451, 0.47451, 0.47451, 0.25098 )
 tile_set = ExtResource( 2 )
@@ -58,8 +81,11 @@ cell_size = Vector2( 63, 49 )
 cell_half_offset = 0
 format = 1
 
-[node name="Animations" type="AnimationPlayer" parent="."]
+[node name="GridAnimations" type="AnimationPlayer" parent="."]
 anims/PlantFlash = SubResource( 1 )
+anims/RootFlash = SubResource( 2 )
+
+[node name="UIAnimations" type="AnimationPlayer" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -149,16 +175,6 @@ custom_fonts/font = ExtResource( 5 )
 text = "Roots"
 align = 1
 
-[node name="RootCancel" parent="UI/Root/CardsContainer/Cards" instance=ExtResource( 10 )]
-unique_name_in_owner = true
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 60.0
-margin_right = 400.0
-margin_bottom = 116.0
-size_flags_vertical = 3
-
 [node name="RootCards" type="VBoxContainer" parent="UI/Root/CardsContainer/Cards"]
 unique_name_in_owner = true
 margin_top = 60.0
@@ -180,6 +196,16 @@ margin_top = 129.0
 margin_right = 400.0
 margin_bottom = 258.0
 
+[node name="RootCancel" parent="UI/Root/CardsContainer/Cards" instance=ExtResource( 10 )]
+unique_name_in_owner = true
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 322.0
+margin_right = 400.0
+margin_bottom = 356.0
+size_flags_vertical = 3
+
 [node name="PlantLabel" type="Label" parent="UI/Root/CardsContainer/Cards"]
 margin_top = 322.0
 margin_right = 400.0
@@ -188,16 +214,6 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "Plants"
 align = 1
-
-[node name="PlantCancel" parent="UI/Root/CardsContainer/Cards" instance=ExtResource( 10 )]
-unique_name_in_owner = true
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 60.0
-margin_right = 400.0
-margin_bottom = 116.0
-size_flags_vertical = 3
 
 [node name="PlantCards" type="VBoxContainer" parent="UI/Root/CardsContainer/Cards"]
 unique_name_in_owner = true
@@ -220,9 +236,6 @@ margin_top = 129.0
 margin_right = 400.0
 margin_bottom = 258.0
 
-[connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCancel" to="." method="_on_root_cancel_selected"]
-[connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCards/RootCard" to="." method="_on_root_selected" binds= [ 0 ]]
-[connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCards/RootCard2" to="." method="_on_root_selected" binds= [ 1 ]]
-[connection signal="selected" from="UI/Root/CardsContainer/Cards/PlantCancel" to="." method="_on_plant_cancel_selected"]
-[connection signal="selected" from="UI/Root/CardsContainer/Cards/PlantCards/PlantCard" to="." method="_on_plant_selected" binds= [ 0 ]]
-[connection signal="selected" from="UI/Root/CardsContainer/Cards/PlantCards/PlantCard2" to="." method="_on_plant_selected" binds= [ 1 ]]
+[connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCards/RootCard" to="." method="_on_root_card_selected" binds= [ 0 ]]
+[connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCards/RootCard2" to="." method="_on_root_card_selected" binds= [ 1 ]]
+[connection signal="pressed" from="UI/Root/CardsContainer/Cards/RootCancel" to="." method="_on_root_cancel_selected"]
