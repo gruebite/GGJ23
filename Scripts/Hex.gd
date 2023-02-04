@@ -77,12 +77,13 @@ static func diagonal_north() -> Vector2: return DIAGONALS[Diagonal.N]
 static func diagonal_northeast() -> Vector2: return DIAGONALS[Diagonal.NE]
 
 static func corner(d: int) -> Vector3: return CORNERS[(6 + (d % 6)) % 6]
-static func corner_east() -> Vector2: return DIAGONALS[Diagonal.E]
-static func corner_southeast() -> Vector2: return DIAGONALS[Diagonal.SE]
-static func corner_southwest() -> Vector2: return DIAGONALS[Diagonal.SW]
-static func corner_west() -> Vector2: return DIAGONALS[Diagonal.W]
-static func corner_northwest() -> Vector2: return DIAGONALS[Diagonal.NW]
-static func corner_northeast() -> Vector2: return DIAGONALS[Diagonal.NE]
+static func corner_east() -> Vector2: return CORNERS[Diagonal.E]
+static func corner_southeast() -> Vector2: return CORNERS[Diagonal.SE]
+static func corner_southwest() -> Vector2: return CORNERS[Diagonal.SW]
+static func corner_west() -> Vector2: return CORNERS[Diagonal.W]
+static func corner_northwest() -> Vector2: return CORNERS[Diagonal.NW]
+static func corner_northeast() -> Vector2: return CORNERS[Diagonal.NE]
+
 
 static func angle_to_direction(angle: float) -> int: return angle_to_ring_index(angle, 1)
 static func direction_to_angle(d: int) -> float: return ANGLES[(6 + (d % 6)) % 6]
@@ -138,8 +139,8 @@ static func from_mod_index(mod: int, radius: int) -> Vector2:
 	var q := ms * (radius + 1) + mcs * -radius
 	var r := mod + ms * (-2 * radius - 1) + mcs * (-radius - 1)
 	return Vector2(q, r)
-	
-	
+
+
 static func to_fractional(coord: Vector2) -> Vector2: return Vector2(coord.x, coord.y)
 static func to_offset(coord: Vector2) -> Vector3: return Vector3(coord.x + (int(coord.y) >> 1), coord.y, 0)
 static func to_pixel(coord: Vector2) -> Vector3:

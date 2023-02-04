@@ -8,7 +8,69 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "CoordGrid",
+"language": "GDScript",
+"path": "res://Scripts/CoordGrid.gd"
+}, {
+"base": "Reference",
+"class": "CoordSet",
+"language": "GDScript",
+"path": "res://Scripts/CoordSet.gd"
+}, {
+"base": "Node2D",
+"class": "Game",
+"language": "GDScript",
+"path": "res://Screens/Game/Game.gd"
+}, {
+"base": "Object",
+"class": "Hex",
+"language": "GDScript",
+"path": "res://Scripts/Hex.gd"
+}, {
+"base": "Reference",
+"class": "HexLayout",
+"language": "GDScript",
+"path": "res://Scripts/HexLayout.gd"
+}, {
+"base": "Object",
+"class": "HexSets",
+"language": "GDScript",
+"path": "res://Scripts/HexSets.gd"
+}, {
+"base": "Object",
+"class": "Random",
+"language": "GDScript",
+"path": "res://Scripts/Random.gd"
+} ]
+_global_script_class_icons={
+"CoordGrid": "",
+"CoordSet": "",
+"Game": "",
+"Hex": "",
+"HexLayout": "",
+"HexSets": "",
+"Random": ""
+}
+
 [application]
 
 config/name="GGJ23"
-run/main_scene="res://Screens/Main/Main.tscn"
+run/main_scene="res://Screens/Game/Game.tscn"
+
+[autoload]
+
+GLOBAL="*res://Scripts/AutoLoad/Global.gd"
+
+[debug]
+
+gdscript/warnings/narrowing_conversion=false
+gdscript/warnings/integer_division=false
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
