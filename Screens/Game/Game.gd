@@ -47,34 +47,51 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.pressed:
 			var mouse_pos = get_viewport().canvas_transform.affine_inverse().xform(get_global_mouse_position()) - $Grids.global_position
-			var mouse_hex := GLOBAL.pixel_hex_layout.pixel_to_hex(Vector3(mouse_pos.x, mouse_pos.y, 0))
+			var mouse_coord := GLOBAL.pixel_hex_layout.pixel_to_hex(Vector3(mouse_pos.x, mouse_pos.y, 0))
+			
+			var roots_grid := $Grids/Roots
 			if current_state == State.SELECT_PLANT:
-				if GLOBAL.board_coord_set.has(mouse_hex) and placed_plants.has(mouse_hex):
-					var roots := $Grids/Roots
+				if GLOBAL.board_coord_set.has(mouse_coord) and placed_plants.has(mouse_coord):
+					roots_coord_set.clear()
 					for coord_delta in GLOBAL.neighbor_coord_set.array:
-						var coord = mouse_hex + coord_delta
-						if GLOBAL.board_coord_set.has(coord):
+						var coord = mouse_coord + coord_delta
+						if GLOBAL.board_coord_set.has(coord) and not placed_plants.has(coord):
+							roots_coord_set.add(coord)
 							var offset := Hex.to_offset(coord)
-							roots.set_cell(offset.x, offset.y, 0)
+							roots_grid.set_cell(offset.x, offset.y, 0)
 					$GridAnimations.seek(1, true)
 					$GridAnimations.play("RootFlash")
 					current_state = State.SELECT_ROOT
 			elif current_state == State.SELECT_ROOT:
-				if GLOBAL.board_coord_set.has(mouse_hex):
-					reset_state()
+				if roots_coord_set.has(mouse_coord):
+					root_selected = mouse_coord
+					roots_grid.clear()
+					var offset := Hex.to_offset(mouse_coord)
+					roots_grid.set_cell(offset.x, offset.y, 0)
+					$"%PlantCards".modulate.a = 1
+					current_state = State.SELECT_PLANT_CARD
 
 
 func _on_root_card_selected(which: int) -> void:
-	print("root", which)
 	if current_state != State.SELECT_ROOT_CARD:
 		return
-	next_state()
+	
+	current_state = State.SELECT_PLANT
+	$GridAnimations.play("PlantFlash")
+	$"%RootCards".hide()
+	$"%RootCancel".show()
+	print("root", which)
 
 
 func _on_plant_card_selected(which: int) -> void:
 	if current_state != State.SELECT_PLANT_CARD:
 		return
-	next_state()
+	
+	$Grids/Roots.clear()
+	placed_plants[root_selected] = true
+	var offset := Hex.to_offset(root_selected)
+	$Grids/Plants.set_cell(offset.x, offset.y, 1)
+	reset_state()
 	print("plant", which)
 
 
@@ -83,21 +100,6 @@ func _on_root_cancel_selected() -> void:
 		return
 	reset_state()
 	print("cancel")
-
-
-func next_state() -> void:
-	match current_state:
-		State.SELECT_ROOT_CARD:
-			current_state = State.SELECT_PLANT
-			$GridAnimations.play("PlantFlash")
-			$"%RootCards".hide()
-			$"%RootCancel".show()
-		State.SELECT_PLANT:
-			pass
-		State.SELECT_ROOT:
-			pass
-		State.SELECT_PLANT_CARD:
-			pass
 
 
 func reset_state() -> void:
@@ -111,3 +113,4 @@ func reset_state() -> void:
 
 	$"%RootCards".show()
 	$"%RootCancel".hide()
+	$"%PlantCards".modulate.a = 0.5
