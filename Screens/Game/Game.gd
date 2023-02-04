@@ -16,5 +16,4 @@ func _process(delta: float) -> void:
 	var mouse_hex := GLOBAL.pixel_hex_layout.pixel_to_hex(Vector3(mouse_pos.x, mouse_pos.y, 0))
 	if GLOBAL.board_hex_set.has(mouse_hex):
 		var offset := Hex.to_offset(mouse_hex)
-		hl.set_cell(offset.x, offset.y, 0)
-	
+		hl.set_cell(offset.x, offset.y, 2)

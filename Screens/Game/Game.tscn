@@ -16,7 +16,20 @@ cell_size = Vector2( 63, 49 )
 cell_half_offset = 0
 format = 1
 
+[node name="Roots" type="TileMap" parent="Grids"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 63, 49 )
+cell_half_offset = 0
+format = 1
+
+[node name="Plants" type="TileMap" parent="Grids"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 63, 49 )
+cell_half_offset = 0
+format = 1
+
 [node name="Highlight" type="TileMap" parent="Grids"]
+modulate = Color( 0.47451, 0.47451, 0.47451, 1 )
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 63, 49 )
 cell_half_offset = 0
