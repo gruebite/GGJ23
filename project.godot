@@ -11,3 +11,4 @@ config_version=4
 [application]
 
 config/name="GGJ23"
+run/main_scene="res://Screens/Main/Main.tscn"
