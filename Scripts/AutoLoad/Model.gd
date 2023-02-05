@@ -168,15 +168,6 @@ enum Root {
 	HorizontalReachM,
 }
 
-const root_layout_names := [
-	"Cross S",
-	"Cross M",
-	"Xross S",
-	"Xross M",
-	'Vertical Reach M',
-	'Horizontal Reach M'
-]
-
 var root_layouts := [
 	CoordSet.new([Hex.east(), Hex.diagonal_south(), Hex.west(), Hex.diagonal_north()]),
 	CoordSet.new([Hex.east(), Hex.east()*2, Hex.diagonal_south() ,Hex.west(), Hex.west()*2, Hex.diagonal_north()]),

@@ -230,3 +230,7 @@ func score_points(coord: Vector2) -> void:
 	score += like_score - dislike_score
 	
 	$"%PointAmount".text = str(score)
+
+
+func _on_audio_toggled(pressed: bool) -> void:
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), pressed)
