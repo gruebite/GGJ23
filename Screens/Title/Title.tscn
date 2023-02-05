@@ -40,15 +40,16 @@ margin_left = 534.0
 margin_top = 303.0
 margin_right = 745.0
 margin_bottom = 370.0
-size_flags_horizontal = 6
+size_flags_horizontal = 4
 size_flags_vertical = 10
 icon = ExtResource( 2 )
 flat = true
+icon_align = 1
 
-[node name="TitleMusic" type="AudioStreamPlayer2D" parent="."]
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 
-[node name="GameStartSound" type="AudioStreamPlayer2D" parent="."]
+[node name="GameStartSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
