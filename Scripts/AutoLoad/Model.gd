@@ -53,7 +53,7 @@ var plants := [
 	},
 	{
 		"name": "Rock Succulent",
-		"texture": preload("res://Assets/Textures/Roots.png"),
+		"texture": preload("res://Assets/Textures/RockSucculent.png"),
 		"likes": {Plant.ROCK_SUCCULENT: true},
 		"dislikes": {Plant.WATER: true},
 		"weight": 2,
@@ -74,7 +74,7 @@ var plants := [
 	},
 	{
 		"name": "Snooze Berries",
-		"texture": preload("res://Assets/Textures/Roots.png"),
+		"texture": preload("res://Assets/Textures/SnoozeBerries.png"),
 		"likes": {Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true, Plant.GRASS: true},
 		"dislikes": {Plant.WATER: true},
 		"weight": 5,
@@ -95,7 +95,7 @@ var plants := [
 	},
 	{
 		"name": "Rabbit's Foot",
-		"texture": preload("res://Assets/Textures/Roots.png"),
+		"texture": preload("res://Assets/Textures/RabbitsFoot.png"),
 		"likes": {Plant.BIRD_OF_PARADISE: true, Plant.SUN_FLOWER: true, Plant.GRASS: true},
 		"dislikes": {Plant.WOLFS_BANE: true, Plant.BIRD_OF_PARADISE: true},
 		"weight": 3,
@@ -130,7 +130,7 @@ var plants := [
 	},
 	{
 		"name": "Wolf's Bane",
-		"texture": preload("res://Assets/Textures/Roots.png"),
+		"texture": preload("res://Assets/Textures/WolfsBane.png"),
 		"likes": {Plant.CATS_TAIL: true, Plant.SQUIRREL_CORN: true, Plant.FROG_FERN: true},
 		"dislikes": {Plant.WATER: true, Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true, Plant.BEE_ORCHID: true, Plant.BEARS_PAW: true},
 		"weight": 1,
