@@ -82,6 +82,7 @@ enum Root {
 	CrossS,
 	CrossM,
 	XrossS,
+	XrossM,
 	VerticalReachM,
 	HorizontalReachM,
 }
@@ -90,16 +91,18 @@ const root_layout_names := [
 	"Cross S",
 	"Cross M",
 	"Xross S",
+	"Xross M",
 	'Vertical Reach M',
 	'Horizontal Reach M'
 ]
 
 var root_layouts := [
 	CoordSet.new([Hex.east(), Hex.diagonal_south(), Hex.west(), Hex.diagonal_north()]),
-	CoordSet.new([Hex.east(), Hex.east()*2, Hex.diagonal_south(), Hex.southeast()*2 ,Hex.west(), Hex.west()*2, Hex.diagonal_north(), Hex.diagonal_north()*2]),
+	CoordSet.new([Hex.east(), Hex.east()*2, Hex.diagonal_south() ,Hex.west(), Hex.west()*2, Hex.diagonal_north()]),
 	CoordSet.new([Hex.northeast(), Hex.southeast(), Hex.southwest(), Hex.northwest()]),
-	CoordSet.new([Hex.diagonal_south()*2,Hex.diagonal_north()*2]),
-	CoordSet.new([Hex.east()*2,Hex.west()*2]),
+	CoordSet.new([Hex.northeast(), Hex.southeast(), Hex.southwest(), Hex.northwest(), Hex.northeast()*2, Hex.southeast()*2, Hex.southwest()*2, Hex.northwest()*2]),
+	CoordSet.new([Hex.diagonal_south(), Hex.southeast(), Hex.southeast()*2, Hex.southwest(), Hex.southwest()*2, Hex.diagonal_north(), Hex.northeast(), Hex.northeast()*2, Hex.northwest(), Hex.northwest()*2]),
+	CoordSet.new([Hex.east(), Hex.east()*2, Hex.west(), Hex.west()*2, Hex.diagonal_northeast(), Hex.diagonal_northwest(), Hex.diagonal_southeast(), Hex.diagonal_southwest()]),
 ]
 
 var plant_cards := []
@@ -115,7 +118,15 @@ func _ready() -> void:
 			plant_cards.append(PlantCard.new(Plant.BALL_CAP))
 
 	for i in range(60):
-		if i < 30:
+		if i < 10:
 			root_cards.append(RootCard.new(Root.CrossS))
-		else:
+		elif i < 20:
 			root_cards.append(RootCard.new(Root.CrossM))
+		elif i < 30:
+			root_cards.append(RootCard.new(Root.XrossS))
+		elif i < 40:
+			root_cards.append(RootCard.new(Root.XrossM))
+		elif i < 50:
+			root_cards.append(RootCard.new(Root.VerticalReachM))
+		else:
+			root_cards.append(RootCard.new(Root.HorizontalReachM))

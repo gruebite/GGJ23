@@ -157,7 +157,9 @@ func _on_plant_card_selected(which: int) -> void:
 	reset_state()
 	
 	root_card_dock[root_card_selected] = root_deck.draw_card()
+	root_cards_node.get_child(root_card_selected).set_root_card(root_card_dock[root_card_selected])
 	plant_card_dock[plant_card_selected] = plant_deck.draw_card()
+	plant_cards_node.get_child(plant_card_selected).set_plant_card(plant_card_dock[plant_card_selected])
 	$UI/Root/TitleBar/Turns/Amount.text = str(root_deck.remaining() + 2)
 	
 	score_points(root_coord_selected)
