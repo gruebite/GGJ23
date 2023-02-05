@@ -59,7 +59,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/AutoLoad/Model.gd"
 }, {
-"base": "Reference",
+"base": "Card",
 "class": "PlantCard",
 "language": "GDScript",
 "path": "res://Scripts/Gameplay/PlantCard.gd"
@@ -69,7 +69,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Random.gd"
 }, {
-"base": "Reference",
+"base": "Card",
 "class": "RootCard",
 "language": "GDScript",
 "path": "res://Scripts/Gameplay/RootCard.gd"
@@ -92,13 +92,9 @@ _global_script_class_icons={
 
 [application]
 
-<<<<<<< HEAD
-config/name="GGJ23"
-run/main_scene="res://Screens/Title/Title.tscn"
-=======
 config/name="Root Routes"
-run/main_scene="res://Screens/Game/Game.tscn"
->>>>>>> 0dd2082 (Adjust sprites.)
+run/main_scene="res://Screens/Title/Title.tscn"
+<<<<<<<HEADconfig/name="GGJ23"
 
 [autoload]
 

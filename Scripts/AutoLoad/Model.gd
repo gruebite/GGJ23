@@ -96,7 +96,7 @@ var plants := [
 	{
 		"name": "Rabbit's Foot",
 		"texture": preload("res://Assets/Textures/RabbitsFoot.png"),
-		"likes": {Plant.BIRD_OF_PARADISE: true, Plant.SUN_FLOWER: true, Plant.GRASS: true},
+		"likes": {Plant.SUN_FLOWER: true, Plant.GRASS: true},
 		"dislikes": {Plant.WOLFS_BANE: true, Plant.BIRD_OF_PARADISE: true},
 		"weight": 3,
 	},
