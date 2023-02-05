@@ -16,6 +16,10 @@ func _init(arr: Array = []) -> void:
 		add(elem as Vector2)
 
 
+func size() -> int:
+	return array.size()
+
+
 func clear() -> void:
 	array.clear()
 

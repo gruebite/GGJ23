@@ -131,10 +131,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				$"%RadialPlant".hide()
 				unselect_coords()
 			else:
-				if placed_plants.has(mouse_coord):
-					select_plant_coord(mouse_coord)
-					click_sfx()
-				elif roots_coord_set.has(mouse_coord):
+				if roots_coord_set.has(mouse_coord):
 					select_root_coord(mouse_coord)
 					var pixel := GLOBAL.pixel_hex_layout.hex_to_pixel(mouse_coord)
 					$"%RadialPlant".rect_position = Vector2(pixel.x, pixel.y) + $Grids.global_position
@@ -174,7 +171,11 @@ func _on_radial_plant_selected(plant_card: PlantCard) -> void:
 	
 	turns_remaining -= 1
 	$"%TurnAmount".text = str(turns_remaining)
-	if turns_remaining == 0:
+	if turns_remaining == 0 or roots_coord_set.size() == 0: # No roots available.
+		if roots_coord_set.size() == 0:
+			$UI/GameOver.set_message("You got stuck!")
+		else:
+			$UI/GameOver.set_message("")
 		$UI/GameOver.set_score(score)
 		$UI/GameOver.show()
 		game_over_sfx()
