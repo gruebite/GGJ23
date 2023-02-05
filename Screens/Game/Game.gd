@@ -7,6 +7,19 @@ enum State {
 	SELECT_PLANT_CARD,
 }
 
+const FACTORIALS := [
+	0, # Here we break math.
+	1,
+	2,
+	6,
+	24,
+	120,
+	720,
+]
+
+var score := 0
+var score_bank := 0
+
 var placed_plants := {}
 var current_state := State.SELECT_ROOT_CARD as int
 
@@ -160,7 +173,7 @@ func _on_plant_card_selected(which: int) -> void:
 	root_cards_node.get_child(root_card_selected).set_root_card(root_card_dock[root_card_selected])
 	plant_card_dock[plant_card_selected] = plant_deck.draw_card()
 	plant_cards_node.get_child(plant_card_selected).set_plant_card(plant_card_dock[plant_card_selected])
-	$UI/Root/TitleBar/Turns/Amount.text = str(root_deck.remaining() + 2)
+	$"%TurnAmount".text = str(root_deck.remaining() + 2)
 	
 	score_points(root_coord_selected)
 	
@@ -193,4 +206,27 @@ func reset_state() -> void:
 
 
 func score_points(coord: Vector2) -> void:
-	pass
+	var plant_type := placed_plants[coord] as int
+	var plant_def := MODEL.plants[plant_type] as Dictionary
+	
+	var like_count := 0
+	var dislike_count := 0
+	
+	for coord_delta in GLOBAL.neighbor_coord_set.array:
+		var neigh := (coord + coord_delta) as Vector2
+		if not GLOBAL.board_coord_set.has(neigh):
+			continue
+		
+		if placed_plants.has(neigh):
+			var neigh_type := placed_plants[neigh] as int
+			if plant_def.likes.has(neigh_type):
+				like_count += 1
+			elif plant_def.dislikes.has(neigh_type):
+				dislike_count += 1
+	
+	var like_score = FACTORIALS[like_count]
+	var dislike_score = FACTORIALS[dislike_count]
+	
+	score += like_score - dislike_score
+	
+	$"%PointAmount".text = str(score)
