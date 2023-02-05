@@ -2,8 +2,7 @@ class_name Model extends Node
 
 
 enum Plant {
-	WATER = -2,
-	ALL = -1,
+	WATER,
 	YGGDRASIL,
 	MIGHTY_OAK,
 	CONY_FIERCE,
@@ -17,16 +16,22 @@ enum Plant {
 
 var plants := [
 	{
+		"name": "Water",
+		"texture": preload("res://Assets/Textures/Water.png"),
+		"likes": {},
+		"dislikes": {},
+	},
+	{
 		"name": "Yggdrasil",
 		"texture": preload("res://Assets/Textures/WorldTree.png"),
-		"likes": {Plant.ALL: true},
+		"likes": {},
 		"dislikes": {},
 	},
 	{
 		"name": "Mighty Oak",
 		"texture": preload("res://Assets/Textures/MightyOak.png"),
 		"likes": {},
-		"dislikes": {Plant.MIGHTY_OAK: true},
+		"dislikes": {Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true, Plant.SQUIRREL_CORN: true},
 	},
 	{
 		"name": "Cony Fierce",
@@ -102,7 +107,12 @@ var root_cards := []
 
 func _ready() -> void:
 	for i in range(60):
-		plant_cards.append(PlantCard.new(Plant.MIGHTY_OAK))
+		if i < 20:
+			plant_cards.append(PlantCard.new(Plant.MIGHTY_OAK))
+		elif i < 40:
+			plant_cards.append(PlantCard.new(Plant.CATS_TAIL))
+		else:
+			plant_cards.append(PlantCard.new(Plant.BALL_CAP))
 
 	for i in range(60):
 		if i < 30:

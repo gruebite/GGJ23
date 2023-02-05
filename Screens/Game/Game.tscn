@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Screens/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Screens/Game/TerrainTileSet.tres" type="TileSet" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://Assets/Textures/Cards.png" type="Texture" id=6]
 [ext_resource path="res://UI/Elements/RootCard/RootCardContainer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Screens/Game/PlantTileSet.tres" type="TileSet" id=8]
-[ext_resource path="res://Screens/Game/WaterTileSet.tres" type="TileSet" id=9]
 [ext_resource path="res://UI/Elements/CancelCard/CancelCard.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Screens/Game/RootTileSet.tres" type="TileSet" id=11]
 
@@ -73,7 +72,7 @@ cell_half_offset = 0
 format = 1
 
 [node name="Water" type="TileMap" parent="Grids"]
-tile_set = ExtResource( 9 )
+tile_set = ExtResource( 8 )
 cell_size = Vector2( 63, 49 )
 cell_half_offset = 0
 format = 1

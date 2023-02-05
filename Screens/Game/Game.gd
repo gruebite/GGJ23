@@ -8,7 +8,6 @@ enum State {
 }
 
 var placed_plants := {}
-var placed_water := {}
 var current_state := State.SELECT_ROOT_CARD as int
 
 var roots_coord_set := CoordSet.new()
@@ -66,9 +65,9 @@ func random_generate_level() -> void:
 	
 	# lake gen
 	var lake_seed := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
-	placed_water[lake_seed]=true
+	placed_plants[lake_seed] = Model.Plant.WATER
 	offset = Hex.to_offset(lake_seed)
-	$Grids/Water.set_cell(offset.x, offset.y, 0)
+	$Grids/Water.set_cell(offset.x, offset.y, Model.Plant.WATER)
 	var current_pos = lake_seed
 	for i in range(MAX_LAKE_SIZE):
 		candidate = Hex.get_neighbor(current_pos, GLOBAL.rand.rangei(0,5))
@@ -76,9 +75,9 @@ func random_generate_level() -> void:
 			if i>CORE_LAKE_SIZE:
 				# Spread out from lake center
 				current_pos = candidate
-			placed_water[candidate]=true
+			placed_plants[candidate] = Model.Plant.WATER
 			offset = Hex.to_offset(candidate)
-			$Grids/Water.set_cell(offset.x, offset.y, 0)
+			$Grids/Water.set_cell(offset.x, offset.y, Model.Plant.WATER)
 			
 	# river gen
 	var ring = HexSets.ring(RIVER_RING_RADIUS)
@@ -86,22 +85,18 @@ func random_generate_level() -> void:
 	for i in range(ring.get_size()):
 		candidate = ring.array[i] + center_of_ring
 		if GLOBAL.board_coord_set.has(candidate):
-			placed_water[candidate]=true
+			placed_plants[candidate] = Model.Plant.WATER
 			offset = Hex.to_offset(candidate)
-			$Grids/Water.set_cell(offset.x, offset.y, 0)
+			$Grids/Water.set_cell(offset.x, offset.y, Model.Plant.WATER)
 
 	# Main plant gen
 	var plant_seed := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
 	# make sure no water is in the way
-	while placed_water.has(plant_seed):
+	while placed_plants.has(plant_seed):
 		plant_seed = GLOBAL.board_coord_set.get_random(GLOBAL.rand)
-	placed_plants[plant_seed] = true
+	placed_plants[plant_seed] = Model.Plant.YGGDRASIL
 	offset = Hex.to_offset(plant_seed)
 	$Grids/Plants.set_cell(offset.x, offset.y, Model.Plant.YGGDRASIL)
-
-
-func _process(delta: float) -> void:
-	pass
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -112,7 +107,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			var roots_grid := $Grids/Roots
 			if current_state == State.SELECT_PLANT:
-				if GLOBAL.board_coord_set.has(mouse_coord) and placed_plants.has(mouse_coord) and not placed_water.has(mouse_coord):
+				if GLOBAL.board_coord_set.has(mouse_coord) and placed_plants.has(mouse_coord):
 					roots_coord_set.clear()
 					for coord_delta in root_card_dock[root_card_selected].layout.array:
 						var coord = mouse_coord + coord_delta
@@ -156,7 +151,7 @@ func _on_plant_card_selected(which: int) -> void:
 	
 	plant_card_selected = which
 	$Grids/Roots.clear()
-	placed_plants[root_coord_selected] = true
+	placed_plants[root_coord_selected] = plant_card_dock[which].type
 	var offset := Hex.to_offset(root_coord_selected)
 	$Grids/Plants.set_cell(offset.x, offset.y, plant_card_dock[which].type)
 	reset_state()
