@@ -49,6 +49,23 @@ func _ready() -> void:
 		var offset := Hex.to_offset(coord)
 		tm.set_cell(offset.x, offset.y, 3)
 
+	new_game()
+
+
+func new_game() -> void:
+	turns_remaining = 3
+	$"%TurnAmount".text = "3"
+	score = 0
+	$"%PointAmount".text = "0"
+	
+	$Grids/Plants.clear()
+	$Grids/Roots.clear()
+	$Grids/Water.clear()
+	
+	placed_plants.clear()
+	next_root_card = MODEL.get_random_root_card()
+	curr_root_card = MODEL.get_random_root_card()
+
 	random_generate_level()
 	
 	var excluding := {}
@@ -116,6 +133,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				if placed_plants.has(mouse_coord):
 					select_plant_coord(mouse_coord)
+					click_sfx()
 				elif roots_coord_set.has(mouse_coord):
 					select_root_coord(mouse_coord)
 					var pixel := GLOBAL.pixel_hex_layout.hex_to_pixel(mouse_coord)
@@ -123,6 +141,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					var scores := calculate_scores(mouse_coord, plant_cards)
 					$"%RadialPlant".set_plant_options(plant_cards, scores)
 					$"%RadialPlant".show()
+					click_sfx()
 				else:
 					unselect_coords()
 
@@ -150,10 +169,17 @@ func _on_radial_plant_selected(plant_card: PlantCard) -> void:
 	
 	plant_cards[replace_i] = MODEL.get_random_plant_card(exclusions)
 	plant_cards_node.get_child(replace_i).set_plant_card(plant_cards[replace_i])
-	turns_remaining -= 1
-	$"%TurnAmount".text = str(turns_remaining)
 	
 	score_points(root_coord_selected, plant_card.type)
+	
+	turns_remaining -= 1
+	$"%TurnAmount".text = str(turns_remaining)
+	if turns_remaining == 0:
+		$UI/GameOver.set_score(score)
+		$UI/GameOver.show()
+		game_over_sfx()
+	else:
+		click_sfx()
 
 
 func select_plant_coord(plant_coord: Vector2) -> void:
@@ -243,3 +269,21 @@ func score_points(coord: Vector2, plant_type: int) -> void:
 
 func _on_audio_toggled(pressed: bool) -> void:
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), pressed)
+	click_sfx()
+
+
+func _on_game_over_again() -> void:
+	new_game()
+	$UI/GameOver.hide()
+
+
+func _on_game_over_exit() -> void:
+	get_tree().quit()
+
+
+func click_sfx() -> void:
+	$ClickSound.play()
+
+
+func game_over_sfx() -> void:
+	$GameOverSound.play()
