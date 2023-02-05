@@ -290,6 +290,8 @@ enabled_focus_mode = 0
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 12 )
 
+[node name="Effects" type="Node2D" parent="UI"]
+
 [node name="HelpAnimation" type="AnimationPlayer" parent="."]
 autoplay = "FlashHelp"
 anims/FlashHelp = SubResource( 3 )

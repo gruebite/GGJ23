@@ -7,6 +7,8 @@ enum State {
 	SELECT_PLANT_CARD,
 }
 
+const LIKE_EFFECT := preload("res://UI/Effects/LikeEffect/LikeEffect.tscn")
+
 const FACTORIALS := [
 	0, # Here we break math.
 	1,
@@ -217,12 +219,23 @@ func score_points(coord: Vector2) -> void:
 		if not GLOBAL.board_coord_set.has(neigh):
 			continue
 		
+		var like_effect = null
+		
 		if placed_plants.has(neigh):
 			var neigh_type := placed_plants[neigh] as int
 			if plant_def.likes.has(neigh_type):
 				like_count += 1
+				like_effect = LIKE_EFFECT.instance()
+				like_effect.set_like(true)
 			elif plant_def.dislikes.has(neigh_type):
 				dislike_count += 1
+				like_effect = LIKE_EFFECT.instance()
+				like_effect.set_like(false)
+		
+		if like_effect:
+			var pos := GLOBAL.pixel_hex_layout.hex_to_pixel(neigh)
+			like_effect.position = Vector2(pos.x, pos.y) + $Grids.global_position
+			$UI/Effects.add_child(like_effect)
 	
 	var like_score = FACTORIALS[like_count]
 	var dislike_score = FACTORIALS[dislike_count]
