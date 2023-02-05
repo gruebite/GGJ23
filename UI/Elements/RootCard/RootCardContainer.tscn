@@ -11,10 +11,6 @@ rect_min_size = Vector2( 0, 129 )
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="Button" type="Button" parent="."]
-margin_right = 1280.0
-margin_bottom = 720.0
-
 [node name="CenterContainer" type="CenterContainer" parent="."]
 margin_right = 1280.0
 margin_bottom = 720.0
@@ -34,5 +30,3 @@ cell_half_offset = 0
 cell_tile_origin = 1
 centered_textures = true
 format = 1
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

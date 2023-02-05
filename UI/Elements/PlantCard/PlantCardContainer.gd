@@ -1,7 +1,5 @@
 extends CardContainer
 
-signal selected()
-
 onready var name_label := $Container/Overview/Name
 onready var icon := $Container/Overview/CenterContainer/Icon
 
@@ -11,10 +9,6 @@ onready var dislikes := $Container/Synergies/Dislikes
 
 func _ready() -> void:
 	set_plant_card(PlantCard.new(Model.Plant.MIGHTY_OAK))
-
-
-func _on_button_pressed() -> void:
-	emit_signal("selected")
 
 
 func set_plant_card(card: PlantCard) -> void:

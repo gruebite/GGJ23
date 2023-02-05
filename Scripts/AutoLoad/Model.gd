@@ -178,38 +178,42 @@ var root_layouts := [
 ]
 
 
-func construct_root_deck() -> CardDeck:
-	var root_cards := []
-	for i in range(60):
-		if i < 10:
-			root_cards.append(RootCard.new(Root.CrossS))
-		elif i < 20:
-			root_cards.append(RootCard.new(Root.CrossM))
-		elif i < 30:
-			root_cards.append(RootCard.new(Root.XrossS))
-		elif i < 40:
-			root_cards.append(RootCard.new(Root.XrossM))
-		elif i < 50:
-			root_cards.append(RootCard.new(Root.VerticalReachM))
-		else:
-			root_cards.append(RootCard.new(Root.HorizontalReachM))
+func get_random_root_card() -> RootCard:
+	var r := GLOBAL.rand.rangei(0, 59)
+	if r < 10:
+		return RootCard.new(Root.CrossS)
+	elif r < 20:
+		return RootCard.new(Root.CrossM)
+	elif r < 30:
+		return RootCard.new(Root.XrossS)
+	elif r < 40:
+		return RootCard.new(Root.XrossM)
+	elif r < 50:
+		return RootCard.new(Root.VerticalReachM)
+	else:
+		return RootCard.new(Root.HorizontalReachM)
 	
-	return CardDeck.new(root_cards)
+	return null
 
 
-func construct_plant_deck() -> CardDeck:
-	var plant_cards := []
-
+func get_random_plant_type() -> int:
 	var total_plant_weight := 0
 	for def in plants:
 		total_plant_weight += def.weight
 
-	for _i in range(60):
-		var r := GLOBAL.rand.rangei(0, total_plant_weight)
-		for i in range(plants.size()):
-			r -= plants[i].weight
-			if r < 0:
-				plant_cards.append(PlantCard.new(i))
-				break
-	
-	return CardDeck.new(plant_cards)
+	while true:
+		for _i in range(60):
+			var r := GLOBAL.rand.rangei(0, total_plant_weight)
+			for i in range(plants.size()):
+				r -= plants[i].weight
+				if r < 0:
+					return i
+	return -1
+
+
+func get_random_plant_card(exclusions: Dictionary) -> PlantCard:
+	while true:
+		var plant_type := get_random_plant_type()
+		if not exclusions.has(plant_type):
+			return PlantCard.new(plant_type)
+	return null

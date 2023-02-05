@@ -1,12 +1,5 @@
 class_name Game extends Node2D
 
-enum State {
-	SELECT_ROOT_CARD,
-	SELECT_PLANT,
-	SELECT_ROOT,
-	SELECT_PLANT_CARD,
-}
-
 const LIKE_EFFECT := preload("res://UI/Effects/LikeEffect/LikeEffect.tscn")
 
 const FACTORIALS := [
@@ -19,24 +12,19 @@ const FACTORIALS := [
 	720,
 ]
 
+var turns_remaining := 60
 var score := 0
-var score_bank := 0
 
 var placed_plants := {}
-var current_state := State.SELECT_ROOT_CARD as int
 
 var roots_coord_set := CoordSet.new()
-
 var root_coord_selected := Vector2.ZERO
-var root_card_selected: int
-var plant_card_selected: int
-var root_card_dock := [null, null]
-var plant_card_dock := [null, null]
+var plant_coord_selected := Vector2.ZERO
+var plant_cards := [null, null, null]
+onready var next_root_card := MODEL.get_random_root_card()
+onready var curr_root_card := MODEL.get_random_root_card()
 
-onready var plant_deck := MODEL.construct_plant_deck()
-onready var root_deck := MODEL.construct_root_deck()
-
-onready var root_cards_node := $"%RootCards"
+onready var root_card_node := $"%RootCard"
 onready var plant_cards_node := $"%PlantCards"
 
 # World gen constants
@@ -63,15 +51,15 @@ func _ready() -> void:
 
 	random_generate_level()
 	
-	for i in range(2):
-		root_card_dock[i] = root_deck.draw_card()
-		root_cards_node.get_child(i).set_root_card(root_card_dock[i])
-		plant_card_dock[i] = plant_deck.draw_card()
-		plant_cards_node.get_child(i).set_plant_card(plant_card_dock[i])
+	var excluding := {}
+	for i in range(3):
+		plant_cards[i] = MODEL.get_random_plant_card(excluding)
+		excluding[i] = true
+		plant_cards_node.get_child(i).set_plant_card(plant_cards[i])
 	
-	$"%PlantLabel".modulate.a = 0.75
-	$"%PlantCards".modulate.a = 0.75
-
+	# Set to Yggdrasil
+	select_plant_coord(plant_coord_selected)
+	root_card_node.set_root_card(next_root_card)
 
 
 func random_generate_level() -> void:
@@ -112,6 +100,8 @@ func random_generate_level() -> void:
 	placed_plants[plant_seed] = Model.Plant.YGGDRASIL
 	offset = Hex.to_offset(plant_seed)
 	$Grids/Plants.set_cell(offset.x, offset.y, Model.Plant.YGGDRASIL)
+	
+	plant_coord_selected = plant_seed
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -120,99 +110,110 @@ func _unhandled_input(event: InputEvent) -> void:
 			var mouse_pos = get_viewport().canvas_transform.affine_inverse().xform(get_global_mouse_position()) - $Grids.global_position
 			var mouse_coord := GLOBAL.pixel_hex_layout.pixel_to_hex(Vector3(mouse_pos.x, mouse_pos.y, 0))
 			
-			var roots_grid := $Grids/Roots
-			if current_state == State.SELECT_PLANT:
-				if GLOBAL.board_coord_set.has(mouse_coord) and placed_plants.has(mouse_coord):
-					roots_coord_set.clear()
-					for coord_delta in root_card_dock[root_card_selected].layout.array:
-						var coord = mouse_coord + coord_delta
-						if GLOBAL.board_coord_set.has(coord) and not placed_plants.has(coord):
-							roots_coord_set.add(coord)
-							var offset := Hex.to_offset(coord)
-							roots_grid.set_cell(offset.x, offset.y, 0)
-					$GridAnimations.seek(1, true)
-					$GridAnimations.play("RootFlash")
-					$"%HelpLabel".text = "Select root to grow plant from"
-					current_state = State.SELECT_ROOT
-			elif current_state == State.SELECT_ROOT:
-				if roots_coord_set.has(mouse_coord):
-					root_coord_selected = mouse_coord
-					roots_grid.clear()
-					var offset := Hex.to_offset(mouse_coord)
-					roots_grid.set_cell(offset.x, offset.y, 0)
-					$"%RootLabel".modulate.a = 0.75
-					$"%PlantLabel".modulate.a = 1
-					$"%PlantCards".modulate.a = 1
-					$"%HelpLabel".text = "Select plant"
-					current_state = State.SELECT_PLANT_CARD
+			if $"%RadialPlant".visible:
+				$"%RadialPlant".hide()
+				unselect_coords()
+			else:
+				if placed_plants.has(mouse_coord):
+					select_plant_coord(mouse_coord)
+				elif roots_coord_set.has(mouse_coord):
+					select_root_coord(mouse_coord)
+					var pixel := GLOBAL.pixel_hex_layout.hex_to_pixel(mouse_coord)
+					$"%RadialPlant".rect_position = Vector2(pixel.x, pixel.y) + $Grids.global_position
+					var scores := calculate_scores(mouse_coord, plant_cards)
+					$"%RadialPlant".set_plant_options(plant_cards, scores)
+					$"%RadialPlant".show()
+				else:
+					unselect_coords()
 
 
-func _on_root_card_selected(which: int) -> void:
-	if current_state != State.SELECT_ROOT_CARD:
-		return
-	
-	root_card_selected = which
-	current_state = State.SELECT_PLANT
-	$GridAnimations.play("PlantFlash")
-	$"%RootCards".hide()
-	$"%RootCancel".show()
-	$"%HelpLabel".text = "Select plant to grow roots from"
-	print("root", which)
-
-
-func _on_plant_card_selected(which: int) -> void:
-	if current_state != State.SELECT_PLANT_CARD:
-		return
-	
-	plant_card_selected = which
+func _on_radial_plant_selected(plant_card: PlantCard) -> void:
+	$"%RadialPlant".hide()
 	$Grids/Roots.clear()
-	placed_plants[root_coord_selected] = plant_card_dock[which].type
+	
+	placed_plants[root_coord_selected] = plant_card.type
 	var offset := Hex.to_offset(root_coord_selected)
-	$Grids/Plants.set_cell(offset.x, offset.y, plant_card_dock[which].type)
-	reset_state()
+	$Grids/Plants.set_cell(offset.x, offset.y, plant_card.type)
 	
-	root_card_dock[root_card_selected] = root_deck.draw_card()
-	root_cards_node.get_child(root_card_selected).set_root_card(root_card_dock[root_card_selected])
-	plant_card_dock[plant_card_selected] = plant_deck.draw_card()
-	plant_cards_node.get_child(plant_card_selected).set_plant_card(plant_card_dock[plant_card_selected])
-	$"%TurnAmount".text = str(root_deck.remaining() + 2)
+	curr_root_card = next_root_card
+	next_root_card = MODEL.get_random_root_card()
+	select_plant_coord(root_coord_selected)
+	root_card_node.set_root_card(next_root_card)
 	
-	score_points(root_coord_selected)
+	var replace_i := -1
+	var exclusions := {}
+	for i in plant_cards.size():
+		if plant_cards[i].type == plant_card.type:
+			replace_i = i
+		else:
+			exclusions[(plant_cards[i].type)] = true
 	
-	print("plant", which)
+	plant_cards[replace_i] = MODEL.get_random_plant_card(exclusions)
+	plant_cards_node.get_child(replace_i).set_plant_card(plant_cards[replace_i])
+	turns_remaining -= 1
+	$"%TurnAmount".text = str(turns_remaining)
+	
+	score_points(root_coord_selected, plant_card.type)
 
 
-func _on_root_cancel_selected() -> void:
-	if current_state == State.SELECT_ROOT_CARD:
-		return
-	reset_state()
-	print("cancel")
+func select_plant_coord(plant_coord: Vector2) -> void:
+	plant_coord_selected = plant_coord
 
-
-func reset_state() -> void:
-	current_state = State.SELECT_ROOT_CARD
-	
+	var roots_grid := $Grids/Roots
+	roots_grid.clear()
 	roots_coord_set.clear()
-	$Grids/Roots.clear()
-	
-	$GridAnimations.seek(1, true)
-	$GridAnimations.stop()
-	
-	$"%HelpLabel".text = ""
-
-	$"%RootCards".show()
-	$"%RootCancel".hide()
-	$"%RootLabel".modulate.a = 1
-	$"%PlantLabel".modulate.a = 0.75
-	$"%PlantCards".modulate.a = 0.75
+	for coord_delta in curr_root_card.layout.array:
+		var coord = plant_coord + coord_delta
+		if GLOBAL.board_coord_set.has(coord) and not placed_plants.has(coord):
+			roots_coord_set.add(coord)
+			var offset := Hex.to_offset(coord)
+			roots_grid.set_cell(offset.x, offset.y, 0)
 
 
-func score_points(coord: Vector2) -> void:
-	var plant_type := placed_plants[coord] as int
+func select_root_coord(root_coord: Vector2) -> void:
+	root_coord_selected = root_coord
+	roots_coord_set.clear()
+	var offset := Hex.to_offset(root_coord)
+	$Grids/Roots.set_cell(offset.x, offset.y, 0)
+
+
+func unselect_coords() -> void:
+	select_plant_coord(plant_coord_selected)
+
+
+func calculate_score(coord: Vector2, plant_type: int) -> int:
 	var plant_def := MODEL.plants[plant_type] as Dictionary
 	
 	var like_count := 0
 	var dislike_count := 0
+	
+	for coord_delta in GLOBAL.neighbor_coord_set.array:
+		var neigh := (coord + coord_delta) as Vector2
+		if not GLOBAL.board_coord_set.has(neigh):
+			continue
+		
+		if placed_plants.has(neigh):
+			var neigh_type := placed_plants[neigh] as int
+			if plant_def.likes.has(neigh_type):
+				like_count += 1
+			elif plant_def.dislikes.has(neigh_type):
+				dislike_count += 1
+	
+	var like_score = FACTORIALS[like_count]
+	var dislike_score = FACTORIALS[dislike_count]
+	
+	return like_score - dislike_score
+
+
+func calculate_scores(coord: Vector2, plants: Array) -> Array:
+	var result := [0, 0, 0]
+	for i in range(3):
+		result[i] = calculate_score(coord, plants[i].type)
+	return result
+
+
+func score_points(coord: Vector2, plant_type: int) -> void:
+	var plant_def := MODEL.plants[plant_type] as Dictionary
 	
 	for coord_delta in GLOBAL.neighbor_coord_set.array:
 		var neigh := (coord + coord_delta) as Vector2
@@ -224,11 +225,9 @@ func score_points(coord: Vector2) -> void:
 		if placed_plants.has(neigh):
 			var neigh_type := placed_plants[neigh] as int
 			if plant_def.likes.has(neigh_type):
-				like_count += 1
 				like_effect = LIKE_EFFECT.instance()
 				like_effect.set_like(true)
 			elif plant_def.dislikes.has(neigh_type):
-				dislike_count += 1
 				like_effect = LIKE_EFFECT.instance()
 				like_effect.set_like(false)
 		
@@ -237,10 +236,7 @@ func score_points(coord: Vector2) -> void:
 			like_effect.position = Vector2(pos.x, pos.y) + $Grids.global_position
 			$UI/Effects.add_child(like_effect)
 	
-	var like_score = FACTORIALS[like_count]
-	var dislike_score = FACTORIALS[dislike_count]
-	
-	score += like_score - dislike_score
+	score += calculate_score(coord, plant_type)
 	
 	$"%PointAmount".text = str(score)
 

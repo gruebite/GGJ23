@@ -1,14 +1,8 @@
 extends CardContainer
 
-signal selected()
-
 
 func _ready() -> void:
 	set_root_card(RootCard.new(Model.Root.CrossS))
-
-
-func _on_button_pressed() -> void:
-	emit_signal("selected")
 
 
 func set_root_card(root_card: RootCard) -> void:
