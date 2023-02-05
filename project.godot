@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/AutoLoad/Model.gd"
 }, {
+"base": "Card",
+"class": "PlantCard",
+"language": "GDScript",
+"path": "res://Scripts/PlantCard.gd"
+}, {
 "base": "Object",
 "class": "Random",
 "language": "GDScript",
@@ -74,6 +79,7 @@ _global_script_class_icons={
 "HexLayout": "",
 "HexSets": "",
 "Model": "",
+"PlantCard": "",
 "Random": "",
 "RootCard": ""
 }

@@ -20,9 +20,6 @@ var plants := [
 	},
 ]
 
-var plant_synergies := []
-var plant_antogonies := []
-
 
 enum Roots {
 	CrossS,
