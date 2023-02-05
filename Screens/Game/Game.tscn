@@ -130,7 +130,8 @@ custom_fonts/font = ExtResource( 5 )
 text = "Points "
 align = 2
 
-[node name="Amount" type="Label" parent="UI/Root/TitleBar/Points"]
+[node name="PointAmount" type="Label" parent="UI/Root/TitleBar/Points"]
+unique_name_in_owner = true
 margin_left = 217.0
 margin_top = 4.0
 margin_right = 430.0
@@ -153,7 +154,8 @@ margin_bottom = 64.0
 size_flags_horizontal = 10
 texture = ExtResource( 6 )
 
-[node name="Amount" type="Label" parent="UI/Root/TitleBar/Turns"]
+[node name="TurnAmount" type="Label" parent="UI/Root/TitleBar/Turns"]
+unique_name_in_owner = true
 margin_left = 217.0
 margin_top = 4.0
 margin_right = 430.0
