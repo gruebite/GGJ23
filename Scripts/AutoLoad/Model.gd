@@ -42,14 +42,14 @@ var plants := [
 		"texture": preload("res://Assets/Textures/MightyOak.png"),
 		"likes": {},
 		"dislikes": {Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true, Plant.SQUIRREL_CORN: true},
-		"weight": 10,
+		"weight": 12,
 	},
 	{
 		"name": "Cony Fierce",
 		"texture": preload("res://Assets/Textures/ConyFierce.png"),
 		"likes": {Plant.ROCK_SUCCULENT: true, Plant.BALL_CAP: true, Plant.CONY_FIERCE: true},
 		"dislikes": {Plant.MIGHTY_OAK: true},
-		"weight": 10,
+		"weight": 12,
 	},
 	{
 		"name": "Rock Succulent",
@@ -133,7 +133,7 @@ var plants := [
 		"texture": preload("res://Assets/Textures/WolfsBane.png"),
 		"likes": {Plant.CATS_TAIL: true, Plant.SQUIRREL_CORN: true, Plant.FROG_FERN: true},
 		"dislikes": {Plant.WATER: true, Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true, Plant.BEE_ORCHID: true, Plant.BEARS_PAW: true},
-		"weight": 1,
+		"weight": 2,
 	},
 	{
 		"name": "Bee Orchid",
@@ -147,7 +147,7 @@ var plants := [
 		"texture": preload("res://Assets/Textures/HiveSucculent.png"),
 		"likes": {Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true},
 		"dislikes": {Plant.WATER: true, Plant.BEARS_PAW: true, Plant.SPIDER_PLANT: true},
-		"weight": 1,
+		"weight": 2,
 	},
 	{
 		"name": "Spider Plant",

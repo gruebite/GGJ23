@@ -37,19 +37,23 @@ align = 1
 [node name="CenterContainer" type="CenterContainer" parent="Container/Overview"]
 margin_top = 52.0
 margin_right = 638.0
-margin_bottom = 52.0
+margin_bottom = 148.0
 mouse_filter = 2
 
 [node name="Icon" type="TextureRect" parent="Container/Overview/CenterContainer"]
-margin_left = 319.0
-margin_right = 319.0
+margin_left = 271.0
+margin_right = 367.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
 mouse_filter = 2
 size_flags_vertical = 3
+expand = true
 
 [node name="Synergies" type="VBoxContainer" parent="Container"]
 margin_left = 642.0
 margin_right = 1280.0
 margin_bottom = 720.0
+rect_min_size = Vector2( 240, 0 )
 mouse_filter = 2
 size_flags_horizontal = 3
 custom_constants/separation = 0
@@ -67,48 +71,49 @@ margin_right = 638.0
 margin_bottom = 360.0
 mouse_filter = 2
 size_flags_vertical = 3
+custom_constants/separation = 0
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Container/Synergies/Likes"]
-margin_left = 231.0
-margin_top = 151.0
-margin_right = 263.0
-margin_bottom = 183.0
-rect_min_size = Vector2( 32, 32 )
+margin_left = 199.0
+margin_top = 143.0
+margin_right = 247.0
+margin_bottom = 191.0
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 expand = true
 
 [node name="TextureRect2" type="TextureRect" parent="Container/Synergies/Likes"]
-margin_left = 267.0
-margin_right = 299.0
+margin_left = 247.0
+margin_right = 295.0
 margin_bottom = 335.0
-rect_min_size = Vector2( 32, 32 )
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 expand = true
 
 [node name="TextureRect3" type="TextureRect" parent="Container/Synergies/Likes"]
-margin_left = 303.0
-margin_right = 335.0
+margin_left = 295.0
+margin_right = 343.0
 margin_bottom = 335.0
-rect_min_size = Vector2( 32, 32 )
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 expand = true
 
 [node name="TextureRect4" type="TextureRect" parent="Container/Synergies/Likes"]
-margin_left = 339.0
-margin_right = 371.0
+margin_left = 343.0
+margin_right = 391.0
 margin_bottom = 335.0
-rect_min_size = Vector2( 32, 32 )
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 expand = true
 
 [node name="TextureRect5" type="TextureRect" parent="Container/Synergies/Likes"]
-margin_left = 375.0
-margin_right = 407.0
+margin_left = 391.0
+margin_right = 439.0
 margin_bottom = 335.0
-rect_min_size = Vector2( 32, 32 )
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 expand = true
 
@@ -126,14 +131,15 @@ margin_right = 638.0
 margin_bottom = 720.0
 mouse_filter = 2
 size_flags_vertical = 3
+custom_constants/separation = 0
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Container/Synergies/Dislikes"]
-margin_left = 231.0
-margin_top = 151.0
-margin_right = 263.0
-margin_bottom = 183.0
-rect_min_size = Vector2( 32, 32 )
+margin_left = 199.0
+margin_top = 143.0
+margin_right = 247.0
+margin_bottom = 191.0
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -141,11 +147,11 @@ expand = true
 stretch_mode = 1
 
 [node name="TextureRect2" type="TextureRect" parent="Container/Synergies/Dislikes"]
-margin_left = 267.0
-margin_top = 151.0
-margin_right = 299.0
-margin_bottom = 183.0
-rect_min_size = Vector2( 32, 32 )
+margin_left = 247.0
+margin_top = 143.0
+margin_right = 295.0
+margin_bottom = 191.0
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -153,11 +159,11 @@ expand = true
 stretch_mode = 1
 
 [node name="TextureRect3" type="TextureRect" parent="Container/Synergies/Dislikes"]
-margin_left = 303.0
-margin_top = 151.0
-margin_right = 335.0
-margin_bottom = 183.0
-rect_min_size = Vector2( 32, 32 )
+margin_left = 295.0
+margin_top = 143.0
+margin_right = 343.0
+margin_bottom = 191.0
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -165,11 +171,11 @@ expand = true
 stretch_mode = 1
 
 [node name="TextureRect4" type="TextureRect" parent="Container/Synergies/Dislikes"]
-margin_left = 339.0
-margin_top = 151.0
-margin_right = 371.0
-margin_bottom = 183.0
-rect_min_size = Vector2( 32, 32 )
+margin_left = 343.0
+margin_top = 143.0
+margin_right = 391.0
+margin_bottom = 191.0
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -177,11 +183,11 @@ expand = true
 stretch_mode = 1
 
 [node name="TextureRect5" type="TextureRect" parent="Container/Synergies/Dislikes"]
-margin_left = 375.0
-margin_top = 151.0
-margin_right = 407.0
-margin_bottom = 183.0
-rect_min_size = Vector2( 32, 32 )
+margin_left = 391.0
+margin_top = 143.0
+margin_right = 439.0
+margin_bottom = 191.0
+rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
