@@ -8,6 +8,7 @@ enum State {
 }
 
 var placed_plants := {}
+var placed_water := {}
 var current_state := State.SELECT_ROOT_CARD as int
 
 var plant_deck := []
@@ -22,21 +23,39 @@ func _ready() -> void:
 	for coord in GLOBAL.board_coord_set.array:
 		var offset := Hex.to_offset(coord)
 		tm.set_cell(offset.x, offset.y, 1)
-	
-	
-	var plant_seed := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
-	placed_plants[plant_seed] = true
-	var offset = Hex.to_offset(plant_seed)
-	$Grids/Plants.set_cell(offset.x, offset.y, 0)
-	
-	for i in range(5):
-		var water_seed := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
-		if not placed_plants.has(water_seed):
-			offset = Hex.to_offset(water_seed)
-			$Grids/Water.set_cell(offset.x, offset.y, 0)
-	
+
+	random_generate_level()
 	
 	$"%PlantCards".modulate.a = 0.5
+
+func random_generate_level() -> void:
+	
+	var offset
+	
+	# lake gen
+	var current_pos := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
+	placed_water[current_pos]=true
+	offset = Hex.to_offset(current_pos)
+	$Grids/Water.set_cell(offset.x, offset.y, 0)
+	for i in range(10):
+		
+		var candidate = Hex.get_neighbor(current_pos, GLOBAL.rand.rangei(0,5))
+		if GLOBAL.board_coord_set.has(candidate):
+			print("right!", current_pos, candidate)
+			current_pos = candidate
+			placed_water[current_pos]=true
+			offset = Hex.to_offset(current_pos)
+			$Grids/Water.set_cell(offset.x, offset.y, 0)
+		else:
+			print("wrong!", current_pos, candidate)
+
+	var plant_seed := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
+	# make sure no water is in the way
+	while placed_water.has(plant_seed):
+		plant_seed = GLOBAL.board_coord_set.get_random(GLOBAL.rand)
+	placed_plants[plant_seed] = true
+	offset = Hex.to_offset(plant_seed)
+	$Grids/Plants.set_cell(offset.x, offset.y, 0)
 
 
 func _process(delta: float) -> void:
