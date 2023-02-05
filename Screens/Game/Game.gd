@@ -11,11 +11,14 @@ var placed_plants := {}
 var placed_water := {}
 var current_state := State.SELECT_ROOT_CARD as int
 
-var plant_deck := []
-var root_deck := []
-
 var roots_coord_set := CoordSet.new()
 var root_selected := Vector2.ZERO
+
+onready var plant_deck := CardDeck.new(MODEL.plant_cards)
+onready var root_deck := CardDeck.new(MODEL.root_cards)
+
+onready var root_cards_node := $"%RootCards"
+onready var plant_cards_node := $"%PlantCards"
 
 func _ready() -> void:
 	var tm := $Grids/Terrain as TileMap
@@ -25,6 +28,11 @@ func _ready() -> void:
 		tm.set_cell(offset.x, offset.y, 1)
 
 	random_generate_level()
+	
+	root_cards_node.get_child(0).set_root_card(root_deck.draw_card())
+	root_cards_node.get_child(1).set_root_card(root_deck.draw_card())
+	plant_cards_node.get_child(0).set_plant_card(plant_deck.draw_card())
+	plant_cards_node.get_child(1).set_plant_card(plant_deck.draw_card())
 	
 	$"%PlantCards".modulate.a = 0.5
 

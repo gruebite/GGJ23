@@ -9,15 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "Reference",
 "class": "Card",
 "language": "GDScript",
-"path": "res://Scripts/Card.gd"
+"path": "res://Scripts/Gameplay/Card.gd"
 }, {
 "base": "MarginContainer",
 "class": "CardContainer",
 "language": "GDScript",
 "path": "res://UI/Elements/CardContainer.gd"
+}, {
+"base": "Reference",
+"class": "CardDeck",
+"language": "GDScript",
+"path": "res://Scripts/Gameplay/CardDeck.gd"
 }, {
 "base": "Reference",
 "class": "CoordGrid",
@@ -57,7 +62,7 @@ _global_script_classes=[ {
 "base": "Card",
 "class": "PlantCard",
 "language": "GDScript",
-"path": "res://Scripts/PlantCard.gd"
+"path": "res://Scripts/Gameplay/PlantCard.gd"
 }, {
 "base": "Object",
 "class": "Random",
@@ -67,11 +72,12 @@ _global_script_classes=[ {
 "base": "Card",
 "class": "RootCard",
 "language": "GDScript",
-"path": "res://Scripts/RootCard.gd"
+"path": "res://Scripts/Gameplay/RootCard.gd"
 } ]
 _global_script_class_icons={
 "Card": "",
 "CardContainer": "",
+"CardDeck": "",
 "CoordGrid": "",
 "CoordSet": "",
 "Game": "",

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://UI/MainTheme.tres" type="Theme" id=1]
 [ext_resource path="res://UI/Elements/PlantCard/PlantCardContainer.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Fonts/SmallRegular.tres" type="DynamicFont" id=3]
 
 [node name="PlantCard" type="MarginContainer"]
 anchor_right = 1.0
@@ -29,15 +30,20 @@ size_flags_horizontal = 3
 
 [node name="Name" type="Label" parent="Container/Overview"]
 margin_right = 638.0
-margin_bottom = 358.0
-size_flags_vertical = 3
+margin_bottom = 48.0
+rect_min_size = Vector2( 0, 48 )
+size_flags_vertical = 1
 text = "Mighty Oak"
 align = 1
 
-[node name="Icon" type="TextureRect" parent="Container/Overview"]
-margin_top = 362.0
+[node name="CenterContainer" type="CenterContainer" parent="Container/Overview"]
+margin_top = 52.0
 margin_right = 638.0
-margin_bottom = 720.0
+margin_bottom = 52.0
+
+[node name="Icon" type="TextureRect" parent="Container/Overview/CenterContainer"]
+margin_left = 319.0
+margin_right = 319.0
 mouse_filter = 2
 size_flags_vertical = 3
 
@@ -47,30 +53,118 @@ margin_right = 1280.0
 margin_bottom = 720.0
 mouse_filter = 2
 size_flags_horizontal = 3
+custom_constants/separation = 0
 
-[node name="Likes" type="VBoxContainer" parent="Container/Synergies"]
+[node name="LikesLabel" type="Label" parent="Container/Synergies"]
 margin_right = 638.0
-margin_bottom = 358.0
-mouse_filter = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Container/Synergies/Likes"]
-margin_right = 638.0
-margin_bottom = 32.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 3 )
 text = "Likes"
 align = 1
 
-[node name="Dislikes" type="VBoxContainer" parent="Container/Synergies"]
-margin_top = 362.0
+[node name="Likes" type="HBoxContainer" parent="Container/Synergies"]
+margin_top = 21.0
+margin_right = 638.0
+margin_bottom = 360.0
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="Container/Synergies/Likes"]
+margin_top = 169.0
+margin_bottom = 169.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand = true
+
+[node name="TextureRect2" type="TextureRect" parent="Container/Synergies/Likes"]
+margin_left = 4.0
+margin_right = 4.0
+margin_bottom = 339.0
+
+[node name="TextureRect3" type="TextureRect" parent="Container/Synergies/Likes"]
+margin_left = 8.0
+margin_right = 8.0
+margin_bottom = 339.0
+
+[node name="TextureRect4" type="TextureRect" parent="Container/Synergies/Likes"]
+margin_left = 12.0
+margin_right = 12.0
+margin_bottom = 339.0
+
+[node name="TextureRect5" type="TextureRect" parent="Container/Synergies/Likes"]
+margin_left = 16.0
+margin_right = 16.0
+margin_bottom = 339.0
+
+[node name="DislikesLabel" type="Label" parent="Container/Synergies"]
+margin_top = 360.0
+margin_right = 638.0
+margin_bottom = 381.0
+custom_fonts/font = ExtResource( 3 )
+text = "Dislikes"
+align = 1
+
+[node name="Dislikes" type="HBoxContainer" parent="Container/Synergies"]
+margin_top = 381.0
 margin_right = 638.0
 margin_bottom = 720.0
 mouse_filter = 2
 size_flags_vertical = 3
+alignment = 1
 
-[node name="Label" type="Label" parent="Container/Synergies/Dislikes"]
-margin_right = 638.0
-margin_bottom = 32.0
-text = "Dislikes"
-align = 1
+[node name="TextureRect" type="TextureRect" parent="Container/Synergies/Dislikes"]
+margin_left = 231.0
+margin_top = 153.0
+margin_right = 263.0
+margin_bottom = 185.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand = true
+stretch_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Container/Synergies/Dislikes"]
+margin_left = 267.0
+margin_top = 153.0
+margin_right = 299.0
+margin_bottom = 185.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand = true
+stretch_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="Container/Synergies/Dislikes"]
+margin_left = 303.0
+margin_top = 153.0
+margin_right = 335.0
+margin_bottom = 185.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand = true
+stretch_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="Container/Synergies/Dislikes"]
+margin_left = 339.0
+margin_top = 153.0
+margin_right = 371.0
+margin_bottom = 185.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand = true
+stretch_mode = 1
+
+[node name="TextureRect5" type="TextureRect" parent="Container/Synergies/Dislikes"]
+margin_left = 375.0
+margin_top = 153.0
+margin_right = 407.0
+margin_bottom = 185.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand = true
+stretch_mode = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

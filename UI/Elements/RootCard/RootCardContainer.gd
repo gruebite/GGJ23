@@ -4,7 +4,7 @@ signal selected()
 
 
 func _ready() -> void:
-	set_root_card(RootCard.new(Model.Roots.CrossS))
+	set_root_card(RootCard.new(Model.Root.CrossS))
 
 
 func _on_button_pressed() -> void:

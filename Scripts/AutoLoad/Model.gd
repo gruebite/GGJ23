@@ -10,18 +10,20 @@ enum Plant {
 var plants := [
 	{
 		"name": "Yggdrasil",
+		"texture": preload("res://Assets/Textures/WorldTree.png"),
 		"likes": {Plant.ALL: true},
 		"dislikes": {},
 	},
 	{
 		"name": "Mighty Oak",
+		"texture": preload("res://Assets/Textures/MightyOak.png"),
 		"likes": {},
 		"dislikes": {Plant.MIGHTY_OAK: true},
 	},
 ]
 
 
-enum Roots {
+enum Root {
 	CrossS,
 	CrossM,
 	XrossS,
@@ -45,5 +47,15 @@ var root_layouts := [
 	CoordSet.new([Hex.east()*2,Hex.west()*2]),
 ]
 
+var plant_cards := []
+var root_cards := []
+
 func _ready() -> void:
-	pass
+	for i in range(60):
+		plant_cards.append(PlantCard.new(Plant.MIGHTY_OAK))
+
+	for i in range(60):
+		if i < 30:
+			root_cards.append(RootCard.new(Root.CrossS))
+		else:
+			root_cards.append(RootCard.new(Root.CrossM))
