@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/Textures/Title.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Textures/StartButton.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Textures/TitleBG.png" type="Texture" id=3]
+[ext_resource path="res://Screens/Title/Title.gd" type="Script" id=4]
+[ext_resource path="res://Assets/Audio/GameStart2.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Audio/StartMusic.mp3" type="AudioStream" id=6]
+
+[node name="Title" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="TitleBG" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+stretch_mode = 7
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_top = 200
+custom_constants/margin_bottom = 150
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_top = 200.0
+margin_right = 1280.0
+margin_bottom = 570.0
+
+[node name="TitleSprite" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+margin_right = 1280.0
+margin_bottom = 100.0
+texture = ExtResource( 1 )
+stretch_mode = 4
+
+[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_left = 534.0
+margin_top = 303.0
+margin_right = 745.0
+margin_bottom = 370.0
+size_flags_horizontal = 6
+size_flags_vertical = 10
+icon = ExtResource( 2 )
+flat = true
+
+[node name="TitleMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[node name="GameStartSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
