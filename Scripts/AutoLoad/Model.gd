@@ -4,14 +4,14 @@ enum Plant {
 	WATER,
 	YGGDRASIL,
 	MIGHTY_OAK,
-	CONY_FIERCE,
-	ROCK_SUCCULENT,
-	GRASS,
-	BALL_CAP,
-	SNOOZE_BERRIES,
+	CONY_FIERCE, #XXXXXXXXXXX
+	ROCK_SUCCULENT, #XXXXXXXXXXX
+	GRASS, #XXXXXXXXXXX
+	BALL_CAP, #XXXXXXXXXXX
+	SNOOZE_BERRIES, #XXXXXXXXXXX
 	SUN_FLOWER,
 	CATS_TAIL,
-	RABBITS_FOOT,
+	RABBITS_FOOT, #XXXXXXXXXXX
 	SQUIRREL_CORN,
 	FROG_FERN,
 	BIRD_OF_PARADISE,
@@ -49,35 +49,35 @@ var plants := [
 		"texture": preload("res://Assets/Textures/ConyFierce.png"),
 		"likes": {Plant.ROCK_SUCCULENT: true, Plant.BALL_CAP: true, Plant.CONY_FIERCE: true},
 		"dislikes": {Plant.MIGHTY_OAK: true},
-		"weight": 12,
+		"weight": 0,
 	},
 	{
 		"name": "Rock Succulent",
 		"texture": preload("res://Assets/Textures/RockSucculent.png"),
 		"likes": {Plant.ROCK_SUCCULENT: true},
 		"dislikes": {Plant.WATER: true},
-		"weight": 2,
+		"weight": 0,
 	},
 	{
 		"name": "Grass",
 		"texture": preload("res://Assets/Textures/Grass.png"),
 		"likes": {Plant.BEE_ORCHID: true},
 		"dislikes": {Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true, Plant.ROCK_SUCCULENT: true},
-		"weight": 4,
+		"weight": 0,
 	},
 	{
 		"name": "Ball Cap",
 		"texture": preload("res://Assets/Textures/BallCap.png"),
 		"likes": {Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true, Plant.WATER: true},
 		"dislikes": {Plant.RABBITS_FOOT: true, Plant.SQUIRREL_CORN: true, Plant.BIRD_OF_PARADISE: true},
-		"weight": 3,
+		"weight": 0,
 	},
 	{
 		"name": "Snooze Berries",
 		"texture": preload("res://Assets/Textures/SnoozeBerries.png"),
 		"likes": {Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true, Plant.GRASS: true},
 		"dislikes": {Plant.WATER: true},
-		"weight": 5,
+		"weight": 0,
 	},
 	{
 		"name": "Sun Flower",
@@ -98,7 +98,7 @@ var plants := [
 		"texture": preload("res://Assets/Textures/RabbitsFoot.png"),
 		"likes": {Plant.SUN_FLOWER: true, Plant.GRASS: true},
 		"dislikes": {Plant.WOLFS_BANE: true, Plant.BIRD_OF_PARADISE: true},
-		"weight": 3,
+		"weight": 0,
 	},
 	{
 		"name": "Squirrel Corn",
