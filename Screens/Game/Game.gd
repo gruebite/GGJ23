@@ -175,7 +175,7 @@ func _on_radial_plant_selected(plant_card: PlantCard) -> void:
 		if roots_coord_set.size() == 0:
 			$UI/GameOver.set_message("You got stuck!")
 		else:
-			$UI/GameOver.set_message("")
+			$UI/GameOver.set_message("No more turns!")
 		$UI/GameOver.set_score(score)
 		$UI/GameOver.show()
 		game_over_sfx()

@@ -9,6 +9,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 0, 129 )
 theme = ExtResource( 1 )
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
 script = ExtResource( 2 )
 
 [node name="Panel" type="Panel" parent="."]
@@ -56,19 +60,19 @@ margin_bottom = 720.0
 rect_min_size = Vector2( 240, 0 )
 mouse_filter = 2
 size_flags_horizontal = 3
-custom_constants/separation = 0
+custom_constants/separation = -5
 
 [node name="LikesLabel" type="Label" parent="Container/Synergies"]
 margin_right = 638.0
-margin_bottom = 25.0
+margin_bottom = 28.0
 custom_fonts/font = ExtResource( 3 )
 text = "Likes"
 align = 1
 
 [node name="Likes" type="HBoxContainer" parent="Container/Synergies"]
-margin_top = 25.0
+margin_top = 23.0
 margin_right = 638.0
-margin_bottom = 360.0
+margin_bottom = 362.0
 mouse_filter = 2
 size_flags_vertical = 3
 custom_constants/separation = 0
@@ -76,9 +80,9 @@ alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Container/Synergies/Likes"]
 margin_left = 199.0
-margin_top = 143.0
+margin_top = 145.0
 margin_right = 247.0
-margin_bottom = 191.0
+margin_bottom = 193.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
@@ -88,7 +92,7 @@ expand = true
 [node name="TextureRect2" type="TextureRect" parent="Container/Synergies/Likes"]
 margin_left = 247.0
 margin_right = 295.0
-margin_bottom = 335.0
+margin_bottom = 339.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 expand = true
@@ -96,7 +100,7 @@ expand = true
 [node name="TextureRect3" type="TextureRect" parent="Container/Synergies/Likes"]
 margin_left = 295.0
 margin_right = 343.0
-margin_bottom = 335.0
+margin_bottom = 339.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 expand = true
@@ -104,7 +108,7 @@ expand = true
 [node name="TextureRect4" type="TextureRect" parent="Container/Synergies/Likes"]
 margin_left = 343.0
 margin_right = 391.0
-margin_bottom = 335.0
+margin_bottom = 339.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 expand = true
@@ -112,13 +116,13 @@ expand = true
 [node name="TextureRect5" type="TextureRect" parent="Container/Synergies/Likes"]
 margin_left = 391.0
 margin_right = 439.0
-margin_bottom = 335.0
+margin_bottom = 339.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 expand = true
 
 [node name="DislikesLabel" type="Label" parent="Container/Synergies"]
-margin_top = 360.0
+margin_top = 357.0
 margin_right = 638.0
 margin_bottom = 385.0
 custom_fonts/font = ExtResource( 3 )
@@ -126,7 +130,7 @@ text = "Dislikes"
 align = 1
 
 [node name="Dislikes" type="HBoxContainer" parent="Container/Synergies"]
-margin_top = 385.0
+margin_top = 380.0
 margin_right = 638.0
 margin_bottom = 720.0
 mouse_filter = 2
@@ -136,9 +140,9 @@ alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Container/Synergies/Dislikes"]
 margin_left = 199.0
-margin_top = 143.0
+margin_top = 146.0
 margin_right = 247.0
-margin_bottom = 191.0
+margin_bottom = 194.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
@@ -148,9 +152,9 @@ stretch_mode = 1
 
 [node name="TextureRect2" type="TextureRect" parent="Container/Synergies/Dislikes"]
 margin_left = 247.0
-margin_top = 143.0
+margin_top = 146.0
 margin_right = 295.0
-margin_bottom = 191.0
+margin_bottom = 194.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
@@ -160,9 +164,9 @@ stretch_mode = 1
 
 [node name="TextureRect3" type="TextureRect" parent="Container/Synergies/Dislikes"]
 margin_left = 295.0
-margin_top = 143.0
+margin_top = 146.0
 margin_right = 343.0
-margin_bottom = 191.0
+margin_bottom = 194.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
@@ -172,9 +176,9 @@ stretch_mode = 1
 
 [node name="TextureRect4" type="TextureRect" parent="Container/Synergies/Dislikes"]
 margin_left = 343.0
-margin_top = 143.0
+margin_top = 146.0
 margin_right = 391.0
-margin_bottom = 191.0
+margin_bottom = 194.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
@@ -184,9 +188,9 @@ stretch_mode = 1
 
 [node name="TextureRect5" type="TextureRect" parent="Container/Synergies/Dislikes"]
 margin_left = 391.0
-margin_top = 143.0
+margin_top = 146.0
 margin_right = 439.0
-margin_bottom = 191.0
+margin_bottom = 194.0
 rect_min_size = Vector2( 48, 48 )
 mouse_filter = 2
 size_flags_horizontal = 4
