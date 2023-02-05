@@ -13,7 +13,7 @@ var current_state := State.SELECT_ROOT_CARD as int
 
 var roots_coord_set := CoordSet.new()
 
-var root_selected := Vector2.ZERO
+var root_coord_selected := Vector2.ZERO
 var root_card_selected: int
 var plant_card_selected: int
 var root_card_dock := [null, null]
@@ -40,7 +40,9 @@ func _ready() -> void:
 		plant_card_dock[i] = plant_deck.draw_card()
 		plant_cards_node.get_child(i).set_plant_card(plant_card_dock[i])
 	
-	$"%PlantCards".modulate.a = 0.5
+	$"%PlantLabel".modulate.a = 0.75
+	$"%PlantCards".modulate.a = 0.75
+
 
 func random_generate_level() -> void:
 	var offset
@@ -67,7 +69,7 @@ func random_generate_level() -> void:
 		plant_seed = GLOBAL.board_coord_set.get_random(GLOBAL.rand)
 	placed_plants[plant_seed] = true
 	offset = Hex.to_offset(plant_seed)
-	$Grids/Plants.set_cell(offset.x, offset.y, 0)
+	$Grids/Plants.set_cell(offset.x, offset.y, Model.Plant.YGGDRASIL)
 
 
 func _process(delta: float) -> void:
@@ -82,7 +84,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			var roots_grid := $Grids/Roots
 			if current_state == State.SELECT_PLANT:
-				if GLOBAL.board_coord_set.has(mouse_coord) and placed_plants.has(mouse_coord):
+				if GLOBAL.board_coord_set.has(mouse_coord) and placed_plants.has(mouse_coord) and not placed_water.has(mouse_coord):
 					roots_coord_set.clear()
 					for coord_delta in root_card_dock[root_card_selected].layout.array:
 						var coord = mouse_coord + coord_delta
@@ -92,14 +94,18 @@ func _unhandled_input(event: InputEvent) -> void:
 							roots_grid.set_cell(offset.x, offset.y, 0)
 					$GridAnimations.seek(1, true)
 					$GridAnimations.play("RootFlash")
+					$"%HelpLabel".text = "Select root to grow plant from"
 					current_state = State.SELECT_ROOT
 			elif current_state == State.SELECT_ROOT:
 				if roots_coord_set.has(mouse_coord):
-					root_selected = mouse_coord
+					root_coord_selected = mouse_coord
 					roots_grid.clear()
 					var offset := Hex.to_offset(mouse_coord)
 					roots_grid.set_cell(offset.x, offset.y, 0)
+					$"%RootLabel".modulate.a = 0.75
+					$"%PlantLabel".modulate.a = 1
 					$"%PlantCards".modulate.a = 1
+					$"%HelpLabel".text = "Select plant"
 					current_state = State.SELECT_PLANT_CARD
 
 
@@ -112,6 +118,7 @@ func _on_root_card_selected(which: int) -> void:
 	$GridAnimations.play("PlantFlash")
 	$"%RootCards".hide()
 	$"%RootCancel".show()
+	$"%HelpLabel".text = "Select plant to grow roots from"
 	print("root", which)
 
 
@@ -121,13 +128,17 @@ func _on_plant_card_selected(which: int) -> void:
 	
 	plant_card_selected = which
 	$Grids/Roots.clear()
-	placed_plants[root_selected] = true
-	var offset := Hex.to_offset(root_selected)
-	$Grids/Plants.set_cell(offset.x, offset.y, 1)
+	placed_plants[root_coord_selected] = true
+	var offset := Hex.to_offset(root_coord_selected)
+	$Grids/Plants.set_cell(offset.x, offset.y, plant_card_dock[which].type)
 	reset_state()
+	
 	root_card_dock[root_card_selected] = root_deck.draw_card()
 	plant_card_dock[plant_card_selected] = plant_deck.draw_card()
 	$UI/Root/TitleBar/Turns/Amount.text = str(root_deck.remaining() + 2)
+	
+	score_points(root_coord_selected)
+	
 	print("plant", which)
 
 
@@ -146,7 +157,15 @@ func reset_state() -> void:
 	
 	$GridAnimations.seek(1, true)
 	$GridAnimations.stop()
+	
+	$"%HelpLabel".text = ""
 
 	$"%RootCards".show()
 	$"%RootCancel".hide()
-	$"%PlantCards".modulate.a = 0.5
+	$"%RootLabel".modulate.a = 1
+	$"%PlantLabel".modulate.a = 0.75
+	$"%PlantCards".modulate.a = 0.75
+
+
+func score_points(coord: Vector2) -> void:
+	pass

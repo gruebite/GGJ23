@@ -21,7 +21,7 @@ margin_bottom = 388.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 3 )
-text = "Cancel?"
+text = "Cancel"
 align = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
