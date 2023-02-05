@@ -279,7 +279,7 @@ func _on_game_over_again() -> void:
 
 
 func _on_game_over_exit() -> void:
-	get_tree().quit()
+	get_tree().change_scene("res://Screens/Title/Title.tscn")
 
 
 func click_sfx() -> void:
