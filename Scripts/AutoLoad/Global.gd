@@ -15,6 +15,8 @@ var board_coord_set := HexSets.rectangle(0, 11, 0, 11)
 
 var neighbor_coord_set := HexSets.ring(1)
 
+var root_card_coord_set := HexSets.hexagon(3)
+
 # Global RNG.
 var rand := Random.new()
 

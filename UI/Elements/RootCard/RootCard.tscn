@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://UI/MainTheme.tres" type="Theme" id=1]
 [ext_resource path="res://UI/Elements/RootCard/RootCard.gd" type="Script" id=2]
+[ext_resource path="res://UI/Elements/RootCard/SmallHexTileSet.tres" type="TileSet" id=3]
 
 [node name="RootCard" type="MarginContainer"]
 anchor_right = 1.0
@@ -14,11 +15,24 @@ script = ExtResource( 2 )
 margin_right = 1280.0
 margin_bottom = 720.0
 
-[node name="Label" type="Label" parent="."]
-margin_top = 344.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
 margin_right = 1280.0
-margin_bottom = 376.0
-text = "Sup"
-align = 1
+margin_bottom = 720.0
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="CenterContainer"]
+margin_left = 640.0
+margin_top = 360.0
+margin_right = 640.0
+margin_bottom = 360.0
+
+[node name="TileMap" type="TileMap" parent="CenterContainer/Control"]
+position = Vector2( -8, -8 )
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 18, 16 )
+cell_half_offset = 0
+cell_tile_origin = 1
+centered_textures = true
+format = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,4 +1,2 @@
-extends Node
-
-class_name Card
+class_name Card extends Reference
 
