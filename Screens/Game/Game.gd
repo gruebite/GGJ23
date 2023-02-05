@@ -12,7 +12,12 @@ var placed_water := {}
 var current_state := State.SELECT_ROOT_CARD as int
 
 var roots_coord_set := CoordSet.new()
+
 var root_selected := Vector2.ZERO
+var root_card_selected: int
+var plant_card_selected: int
+var root_card_dock := [null, null]
+var plant_card_dock := [null, null]
 
 onready var plant_deck := CardDeck.new(MODEL.plant_cards)
 onready var root_deck := CardDeck.new(MODEL.root_cards)
@@ -29,15 +34,15 @@ func _ready() -> void:
 
 	random_generate_level()
 	
-	root_cards_node.get_child(0).set_root_card(root_deck.draw_card())
-	root_cards_node.get_child(1).set_root_card(root_deck.draw_card())
-	plant_cards_node.get_child(0).set_plant_card(plant_deck.draw_card())
-	plant_cards_node.get_child(1).set_plant_card(plant_deck.draw_card())
+	for i in range(2):
+		root_card_dock[i] = root_deck.draw_card()
+		root_cards_node.get_child(i).set_root_card(root_card_dock[i])
+		plant_card_dock[i] = plant_deck.draw_card()
+		plant_cards_node.get_child(i).set_plant_card(plant_card_dock[i])
 	
 	$"%PlantCards".modulate.a = 0.5
 
 func random_generate_level() -> void:
-	
 	var offset
 	
 	# lake gen
@@ -46,7 +51,6 @@ func random_generate_level() -> void:
 	offset = Hex.to_offset(current_pos)
 	$Grids/Water.set_cell(offset.x, offset.y, 0)
 	for i in range(10):
-		
 		var candidate = Hex.get_neighbor(current_pos, GLOBAL.rand.rangei(0,5))
 		if GLOBAL.board_coord_set.has(candidate):
 			print("right!", current_pos, candidate)
@@ -80,7 +84,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if current_state == State.SELECT_PLANT:
 				if GLOBAL.board_coord_set.has(mouse_coord) and placed_plants.has(mouse_coord):
 					roots_coord_set.clear()
-					for coord_delta in GLOBAL.neighbor_coord_set.array:
+					for coord_delta in root_card_dock[root_card_selected].layout.array:
 						var coord = mouse_coord + coord_delta
 						if GLOBAL.board_coord_set.has(coord) and not placed_plants.has(coord):
 							roots_coord_set.add(coord)
@@ -103,6 +107,7 @@ func _on_root_card_selected(which: int) -> void:
 	if current_state != State.SELECT_ROOT_CARD:
 		return
 	
+	root_card_selected = which
 	current_state = State.SELECT_PLANT
 	$GridAnimations.play("PlantFlash")
 	$"%RootCards".hide()
@@ -114,11 +119,15 @@ func _on_plant_card_selected(which: int) -> void:
 	if current_state != State.SELECT_PLANT_CARD:
 		return
 	
+	plant_card_selected = which
 	$Grids/Roots.clear()
 	placed_plants[root_selected] = true
 	var offset := Hex.to_offset(root_selected)
 	$Grids/Plants.set_cell(offset.x, offset.y, 1)
 	reset_state()
+	root_card_dock[root_card_selected] = root_deck.draw_card()
+	plant_card_dock[plant_card_selected] = plant_deck.draw_card()
+	$UI/Root/TitleBar/Turns/Amount.text = str(root_deck.remaining() + 2)
 	print("plant", which)
 
 

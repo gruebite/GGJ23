@@ -238,5 +238,6 @@ margin_bottom = 258.0
 
 [connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCards/RootCard" to="." method="_on_root_card_selected" binds= [ 0 ]]
 [connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCards/RootCard2" to="." method="_on_root_card_selected" binds= [ 1 ]]
+[connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCancel" to="." method="_on_root_cancel_selected"]
 [connection signal="selected" from="UI/Root/CardsContainer/Cards/PlantCards/PlantCard" to="." method="_on_plant_card_selected" binds= [ 0 ]]
 [connection signal="selected" from="UI/Root/CardsContainer/Cards/PlantCards/PlantCard2" to="." method="_on_plant_card_selected" binds= [ 1 ]]
