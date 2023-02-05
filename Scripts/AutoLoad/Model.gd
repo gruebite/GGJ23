@@ -2,9 +2,17 @@ class_name Model extends Node
 
 
 enum Plant {
+	WATER = -2,
 	ALL = -1,
 	YGGDRASIL,
 	MIGHTY_OAK,
+	CONY_FIERCE,
+	BALL_CAP,
+	SUN_FLOWER,
+	CATS_TAIL,
+	RABBITS_FOOT,
+	SQUIRREL_CORN,
+	FRON_FERN,
 }
 
 var plants := [
@@ -19,6 +27,48 @@ var plants := [
 		"texture": preload("res://Assets/Textures/MightyOak.png"),
 		"likes": {},
 		"dislikes": {Plant.MIGHTY_OAK: true},
+	},
+	{
+		"name": "Cony Fierce",
+		"texture": preload("res://Assets/Textures/CatsTail.png"),
+		"likes": {Plant.WATER: true},
+		"dislikes": {Plant.BALL_CAP: true},
+	},
+	{
+		"name": "Ball Cap",
+		"texture": preload("res://Assets/Textures/CatsTail.png"),
+		"likes": {Plant.MIGHTY_OAK: true, Plant.CONY_FIERCE: true},
+		"dislikes": {Plant.MIGHTY_OAK: true},
+	},
+	{
+		"name": "Sun Flower",
+		"texture": preload("res://Assets/Textures/CatsTail.png"),
+		"likes": {Plant.WATER: true},
+		"dislikes": {Plant.BALL_CAP: true},
+	},
+	{
+		"name": "Cat's Tail",
+		"texture": preload("res://Assets/Textures/CatsTail.png"),
+		"likes": {Plant.WATER: true},
+		"dislikes": {Plant.BALL_CAP: true},
+	},
+	{
+		"name": "Rabbit's Foot",
+		"texture": preload("res://Assets/Textures/CatsTail.png"),
+		"likes": {Plant.WATER: true},
+		"dislikes": {Plant.BALL_CAP: true},
+	},
+	{
+		"name": "Squirrel Corn",
+		"texture": preload("res://Assets/Textures/CatsTail.png"),
+		"likes": {Plant.WATER: true},
+		"dislikes": {Plant.BALL_CAP: true},
+	},
+	{
+		"name": "Frog Fern",
+		"texture": preload("res://Assets/Textures/CatsTail.png"),
+		"likes": {Plant.WATER: true},
+		"dislikes": {Plant.BALL_CAP: true},
 	},
 ]
 
