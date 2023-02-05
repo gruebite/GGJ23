@@ -92,8 +92,13 @@ _global_script_class_icons={
 
 [application]
 
+<<<<<<< HEAD
 config/name="GGJ23"
 run/main_scene="res://Screens/Title/Title.tscn"
+=======
+config/name="Root Routes"
+run/main_scene="res://Screens/Game/Game.tscn"
+>>>>>>> 0dd2082 (Adjust sprites.)
 
 [autoload]
 
