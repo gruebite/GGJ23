@@ -11,7 +11,7 @@ rect_min_size = Vector2( 0, 129 )
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="Button" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="."]
 margin_right = 1280.0
 margin_bottom = 720.0
 

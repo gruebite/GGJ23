@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Screens/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Screens/Game/TerrainTileSet.tres" type="TileSet" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://UI/Elements/GameOver/GameOver.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Assets/Audio/LeveLComplete.wav" type="AudioStream" id=15]
 [ext_resource path="res://Assets/Audio/UIClick.wav" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Audio/GameStart.wav" type="AudioStream" id=17]
 
 [sub_resource type="Animation" id=2]
 resource_name = "RootFlash"
@@ -92,10 +93,12 @@ theme = ExtResource( 3 )
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 864, 0 )
+mouse_filter = 2
 
 [node name="Points" type="HBoxContainer" parent="UI/Root/TitleBar"]
 margin_right = 430.0
 margin_bottom = 64.0
+mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="UI/Root/TitleBar/Points"]
@@ -123,12 +126,14 @@ text = "0"
 margin_left = 434.0
 margin_right = 864.0
 margin_bottom = 64.0
+mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="Label" type="TextureRect" parent="UI/Root/TitleBar/Turns"]
 margin_left = 149.0
 margin_right = 213.0
 margin_bottom = 64.0
+mouse_filter = 2
 size_flags_horizontal = 10
 texture = ExtResource( 6 )
 
@@ -149,6 +154,7 @@ anchor_right = 1.0
 margin_left = -416.0
 margin_bottom = 620.0
 rect_min_size = Vector2( 416, 656 )
+mouse_filter = 2
 custom_constants/margin_right = 8
 custom_constants/margin_top = 8
 custom_constants/margin_left = 8
@@ -159,6 +165,7 @@ margin_left = 8.0
 margin_top = 8.0
 margin_right = 408.0
 margin_bottom = 648.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -194,6 +201,7 @@ unique_name_in_owner = true
 margin_top = 253.0
 margin_right = 400.0
 margin_bottom = 640.0
+mouse_filter = 2
 size_flags_vertical = 3
 custom_constants/separation = 0
 
@@ -202,6 +210,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 400.0
 margin_bottom = 129.0
+mouse_filter = 2
 
 [node name="PlantCard2" parent="UI/Root/CardsContainer/Cards/PlantCards" instance=ExtResource( 4 )]
 anchor_right = 0.0
@@ -209,6 +218,7 @@ anchor_bottom = 0.0
 margin_top = 129.0
 margin_right = 400.0
 margin_bottom = 258.0
+mouse_filter = 2
 
 [node name="PlantCard3" parent="UI/Root/CardsContainer/Cards/PlantCards" instance=ExtResource( 4 )]
 anchor_right = 0.0
@@ -216,6 +226,7 @@ anchor_bottom = 0.0
 margin_top = 258.0
 margin_right = 400.0
 margin_bottom = 387.0
+mouse_filter = 2
 
 [node name="TextureButton" type="TextureButton" parent="UI/Root"]
 anchor_top = 1.0
@@ -251,6 +262,9 @@ stream = ExtResource( 16 )
 
 [node name="GameOverSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 15 )
+
+[node name="GameStartSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 17 )
 
 [connection signal="toggled" from="UI/Root/TextureButton" to="." method="_on_audio_toggled"]
 [connection signal="plant_selected" from="UI/Root/RadialPlant" to="." method="_on_radial_plant_selected"]

@@ -53,8 +53,8 @@ func _ready() -> void:
 
 
 func new_game() -> void:
-	turns_remaining = 3
-	$"%TurnAmount".text = "3"
+	turns_remaining = 60
+	$"%TurnAmount".text = "60"
 	score = 0
 	$"%PointAmount".text = "0"
 	
@@ -275,6 +275,7 @@ func _on_audio_toggled(pressed: bool) -> void:
 func _on_game_over_again() -> void:
 	new_game()
 	$UI/GameOver.hide()
+	game_start_sfx()
 
 
 func _on_game_over_exit() -> void:
@@ -287,3 +288,7 @@ func click_sfx() -> void:
 
 func game_over_sfx() -> void:
 	$GameOverSound.play()
+
+
+func game_start_sfx() -> void:
+	$GameStartSound.play()
