@@ -25,6 +25,21 @@ onready var root_deck := CardDeck.new(MODEL.root_cards)
 onready var root_cards_node := $"%RootCards"
 onready var plant_cards_node := $"%PlantCards"
 
+# World gen constants
+const MAX_LAKE_SIZE=10
+const CORE_LAKE_SIZE=5
+const RIVER_RING_RADIUS=7
+const RIVER_CENTERS=[
+	Vector2(0,-4),
+	Vector2(-5,2),
+	Vector2(-8,8),
+	Vector2(-8,14),
+	Vector2(0,14),
+	Vector2(6,13),
+	Vector2(10,6),
+	Vector2(11,-1),
+	Vector2(14,-4)]
+	
 func _ready() -> void:
 	var tm := $Grids/Terrain as TileMap
 	tm.modulate = Color.whitesmoke
@@ -42,25 +57,38 @@ func _ready() -> void:
 	
 	$"%PlantCards".modulate.a = 0.5
 
+
 func random_generate_level() -> void:
 	var offset
+	var candidate
 	
 	# lake gen
-	var current_pos := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
-	placed_water[current_pos]=true
-	offset = Hex.to_offset(current_pos)
+	var lake_seed := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
+	placed_water[lake_seed]=true
+	offset = Hex.to_offset(lake_seed)
 	$Grids/Water.set_cell(offset.x, offset.y, 0)
-	for i in range(10):
-		var candidate = Hex.get_neighbor(current_pos, GLOBAL.rand.rangei(0,5))
+	var current_pos = lake_seed
+	for i in range(MAX_LAKE_SIZE):
+		candidate = Hex.get_neighbor(current_pos, GLOBAL.rand.rangei(0,5))
 		if GLOBAL.board_coord_set.has(candidate):
-			print("right!", current_pos, candidate)
-			current_pos = candidate
-			placed_water[current_pos]=true
-			offset = Hex.to_offset(current_pos)
+			if i>CORE_LAKE_SIZE:
+				# Spread out from lake center
+				current_pos = candidate
+			placed_water[candidate]=true
+			offset = Hex.to_offset(candidate)
 			$Grids/Water.set_cell(offset.x, offset.y, 0)
-		else:
-			print("wrong!", current_pos, candidate)
+			
+	# river gen
+	var ring = HexSets.ring(RIVER_RING_RADIUS)
+	var center_of_ring = GLOBAL.rand.choice(RIVER_CENTERS)
+	for i in range(ring.get_size()):
+		candidate = ring.array[i] + center_of_ring
+		if GLOBAL.board_coord_set.has(candidate):
+			placed_water[candidate]=true
+			offset = Hex.to_offset(candidate)
+			$Grids/Water.set_cell(offset.x, offset.y, 0)
 
+	# Main plant gen
 	var plant_seed := GLOBAL.board_coord_set.get_random(GLOBAL.rand)
 	# make sure no water is in the way
 	while placed_water.has(plant_seed):
