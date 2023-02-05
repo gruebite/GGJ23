@@ -45,7 +45,7 @@ func _ready() -> void:
 	tm.modulate = Color.whitesmoke
 	for coord in GLOBAL.board_coord_set.array:
 		var offset := Hex.to_offset(coord)
-		tm.set_cell(offset.x, offset.y, 1)
+		tm.set_cell(offset.x, offset.y, 3)
 
 	random_generate_level()
 	
