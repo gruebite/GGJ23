@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Screens/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Screens/Game/TerrainTileSet.tres" type="TileSet" id=2]
@@ -33,6 +33,22 @@ resource_name = "RootFlash"
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Grids/Roots:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.501961 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "FlashHelp"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("UI/Root/HelpContainer/HelpLabel:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -168,6 +184,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RootLabel" type="Label" parent="UI/Root/CardsContainer/Cards"]
+unique_name_in_owner = true
 margin_right = 400.0
 margin_bottom = 56.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -203,10 +220,11 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 322.0
 margin_right = 400.0
-margin_bottom = 356.0
+margin_bottom = 378.0
 size_flags_vertical = 3
 
 [node name="PlantLabel" type="Label" parent="UI/Root/CardsContainer/Cards"]
+unique_name_in_owner = true
 margin_top = 322.0
 margin_right = 400.0
 margin_bottom = 378.0
@@ -235,6 +253,26 @@ anchor_bottom = 0.0
 margin_top = 129.0
 margin_right = 400.0
 margin_bottom = 258.0
+
+[node name="HelpContainer" type="CenterContainer" parent="UI/Root"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -56.0
+
+[node name="HelpLabel" type="Label" parent="UI/Root/HelpContainer"]
+unique_name_in_owner = true
+margin_left = 640.0
+margin_right = 640.0
+margin_bottom = 56.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 5 )
+align = 1
+
+[node name="HelpAnimation" type="AnimationPlayer" parent="."]
+autoplay = "FlashHelp"
+anims/FlashHelp = SubResource( 3 )
 
 [connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCards/RootCard" to="." method="_on_root_card_selected" binds= [ 0 ]]
 [connection signal="selected" from="UI/Root/CardsContainer/Cards/RootCards/RootCard2" to="." method="_on_root_card_selected" binds= [ 1 ]]
