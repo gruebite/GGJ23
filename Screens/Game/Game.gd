@@ -31,8 +31,8 @@ var plant_card_selected: int
 var root_card_dock := [null, null]
 var plant_card_dock := [null, null]
 
-onready var plant_deck := CardDeck.new(MODEL.plant_cards)
-onready var root_deck := CardDeck.new(MODEL.root_cards)
+onready var plant_deck := MODEL.construct_plant_deck()
+onready var root_deck := MODEL.construct_root_deck()
 
 onready var root_cards_node := $"%RootCards"
 onready var plant_cards_node := $"%PlantCards"

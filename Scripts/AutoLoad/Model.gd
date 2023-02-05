@@ -186,22 +186,9 @@ var root_layouts := [
 	CoordSet.new([Hex.east(), Hex.east()*2, Hex.west(), Hex.west()*2, Hex.diagonal_northeast(), Hex.diagonal_northwest(), Hex.diagonal_southeast(), Hex.diagonal_southwest()]),
 ]
 
-var plant_cards := []
-var root_cards := []
 
-func _ready() -> void:
-	var total_plant_weight := 0
-	for def in plants:
-		total_plant_weight += def.weight
-
-	for _i in range(60):
-		var r := GLOBAL.rand.rangei(0, total_plant_weight)
-		for i in range(plants.size()):
-			r -= plants[i].weight
-			if r < 0:
-				plant_cards.append(PlantCard.new(i))
-				break
-
+func construct_root_deck() -> CardDeck:
+	var root_cards := []
 	for i in range(60):
 		if i < 10:
 			root_cards.append(RootCard.new(Root.CrossS))
@@ -215,3 +202,23 @@ func _ready() -> void:
 			root_cards.append(RootCard.new(Root.VerticalReachM))
 		else:
 			root_cards.append(RootCard.new(Root.HorizontalReachM))
+	
+	return CardDeck.new(root_cards)
+
+
+func construct_plant_deck() -> CardDeck:
+	var plant_cards := []
+
+	var total_plant_weight := 0
+	for def in plants:
+		total_plant_weight += def.weight
+
+	for _i in range(60):
+		var r := GLOBAL.rand.rangei(0, total_plant_weight)
+		for i in range(plants.size()):
+			r -= plants[i].weight
+			if r < 0:
+				plant_cards.append(PlantCard.new(i))
+				break
+	
+	return CardDeck.new(plant_cards)
